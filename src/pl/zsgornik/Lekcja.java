@@ -1,11 +1,84 @@
 package pl.zsgornik;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Lekcja {
     private Przedmiot subject;
     private Nauczyciel teacher;
     private Klasa group;
     private LocalDate date;
+    private final List<Obecnosc> attendances;
 
+    public Lekcja(Przedmiot subject, Nauczyciel teacher, Klasa group, LocalDate date) {
+        this.subject = subject;
+        this.teacher = teacher;
+        this.group = group;
+        this.date = date;
+        this.attendances = new ArrayList<>();
+    }
+
+    public void registerAttendance(Uczen student, StatusObecnosci status) {
+        if (!group.getStudents().contains(student)) {
+            throw new IllegalArgumentException("Uczeń " + student.getFullName() + " nie należy do klasy " + group.getClassName());
+        }
+
+        Obecnosc existing = findAttendance(student);
+        if (existing != null) {
+            existing.setStatus(status);
+        } else {
+            attendances.add(new Obecnosc(student, this, status));
+        }
+    }
+
+    public Obecnosc findAttendance(Uczen student) {
+        for (Obecnosc attendance : attendances) {
+            if (attendance.getStudent().equals(student)) {
+                return attendance;
+            }
+        }
+        return null;
+    }
+
+    public List<Obecnosc> getAttendances() {
+        return attendances;
+    }
+
+    public Przedmiot getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Przedmiot subject) {
+        this.subject = subject;
+    }
+
+    public Nauczyciel getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Nauczyciel teacher) {
+        this.teacher = teacher;
+    }
+
+    public Klasa getGroup() {
+        return group;
+    }
+
+    public void setGroup(Klasa group) {
+        this.group = group;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s - %s (%s)", subject, date, group);
+    }
 }

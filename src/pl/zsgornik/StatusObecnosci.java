@@ -6,25 +6,25 @@ public enum StatusObecnosci {
     ZWOLNIONY("Zwolniony", "ZW", null),
     NIEOBECNY("Nieobecny", "N", false);
 
-    private String fullname;
-    private String shortForm;
-    private boolean wasPresent;
+    private final String fullName;
+    private final String shortForm;
+    private final Boolean wasPresent;
 
-    StatusObecnosci(String fullname, String shortForm, Boolean wasPresent) {
-        this.fullname = fullname;
+    StatusObecnosci(String fullName, String shortForm, Boolean wasPresent) {
+        this.fullName = fullName;
         this.shortForm = shortForm;
         this.wasPresent = wasPresent;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFullName() {
+        return fullName;
     }
 
     public String getShortForm() {
         return shortForm;
     }
 
-    public boolean isWasPresent() {
+    public Boolean getWasPresent() {
         return wasPresent;
     }
 }
