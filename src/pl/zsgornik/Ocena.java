@@ -1,20 +1,42 @@
 package pl.zsgornik;
 
-public class Ocena {
-    private int value;
-    private String comment;
+import java.time.LocalDate;
 
-    public Ocena(int value, String comment) {
+public class Ocena {
+    private double value;
+    private String comment;
+    private LocalDate date;
+    private Lekcja lesson;
+    private Uczen student;
+
+    public Ocena(double value, Lekcja lesson, Uczen student,String comment, LocalDate date) {
         this.value = value;
+        this.comment = comment;
+        this.date = date;
+        this.lesson = lesson;
+        this.student = student;
+    }
+
+    public Ocena(double value, Lekcja lesson, Uczen student, LocalDate date) {
+        this(value, lesson, student);
+        this.date = date;
+    }
+
+    public Ocena(double value, Lekcja lesson, Uczen student, String comment) {
+        this(value, lesson, student);
         this.comment = comment;
     }
 
-    public Ocena(int value) {
+    public Ocena(double value, Lekcja lesson, Uczen student) {
+
+        this.lesson = lesson;
+        this.student = student;
         this.value = value;
         comment = "Brak komentarza.";
+        date = LocalDate.now();
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -28,5 +50,21 @@ public class Ocena {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Uczen getStudent() {
+        return student;
+    }
+
+    public void setStudent(Uczen student) {
+        this.student = student;
+    }
+
+    public Lekcja getLesson() {
+        return lesson;
+    }
+
+    public void setLesson(Lekcja lesson) {
+        this.lesson = lesson;
     }
 }
