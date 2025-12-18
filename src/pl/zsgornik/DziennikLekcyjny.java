@@ -1,17 +1,19 @@
 package pl.zsgornik;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 
 public class DziennikLekcyjny {
-    private List<Klasa> group;
+    private List<Klasa> groups;
     private List<Nauczyciel> teachers;
     private List<Przedmiot> subjects;
     private List<Ocena> grades;
+    private List<Lekcja> lessons;
     private static Nauczyciel loggedAs;
 
-    public DziennikLekcyjny(List<Klasa> group, List<Nauczyciel> teachers, List<Przedmiot> subjects, List<Ocena> grades) {
-        this.group = group;
+    public DziennikLekcyjny(ArrayList<Klasa> groups, ArrayList<Nauczyciel> teachers, ArrayList<Przedmiot> subjects, ArrayList<Ocena> grades) {
+        this.groups = groups;
         this.teachers = teachers;
         this.subjects = subjects;
         this.grades = grades;
@@ -41,5 +43,17 @@ public class DziennikLekcyjny {
         return avg.isPresent() ? avg.getAsDouble(): -1;
     }
 
+    private double reportPresencePercent(Uczen student) {
+        Klasa group = groups.stream()
+                .filter(x -> x.getStudents().contains(student))
+                .findFirst()
+                .orElseThrow();
 
+        int allLessons = Math.toIntExact(groups.stream()
+                .filter(x -> x.equals(group) && x.hashCode() == group.hashCode())
+                .count());
+
+        int lessonsPresentByStudent;
+        return 0;
+    }
 }
