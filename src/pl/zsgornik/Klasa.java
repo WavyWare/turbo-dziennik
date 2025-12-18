@@ -2,6 +2,7 @@ package pl.zsgornik;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Klasa {
     private final Nauczyciel supervisor;
@@ -44,6 +45,18 @@ public class Klasa {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Klasa klasa = (Klasa) o;
+        return Objects.equals(supervisor, klasa.supervisor) && Objects.equals(students, klasa.students) && Objects.equals(classLeader, klasa.classLeader) && Objects.equals(className, klasa.className);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(supervisor, students, classLeader, className);
     }
 
     @Override
