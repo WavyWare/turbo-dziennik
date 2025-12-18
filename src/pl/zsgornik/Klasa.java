@@ -5,13 +5,23 @@ import java.util.List;
 
 public class Klasa {
     private final Nauczyciel supervisor;
-    private final List<Uczen> students;
+    private List<Uczen> students;
+    private Uczen classLeader;
     private String className;
+
+    public Klasa(Nauczyciel supervisor, ArrayList<Uczen> students, Uczen classLeader, String className) {
+        this(className, supervisor, students);
+        this.classLeader = classLeader;
+    }
+
+    public Klasa(String className, Nauczyciel supervisor, ArrayList<Uczen> students) {
+        this(className, supervisor);
+        this.students = students;
+    }
 
     public Klasa(String className, Nauczyciel supervisor) {
         this.className = className;
         this.supervisor = supervisor;
-        this.students = new ArrayList<>();
     }
 
     public void addStudent(Uczen student) {
