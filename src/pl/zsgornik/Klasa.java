@@ -23,6 +23,7 @@ public class Klasa {
     public Klasa(String className, Nauczyciel supervisor) {
         this.className = className;
         this.supervisor = supervisor;
+        this.students = new ArrayList<>();
     }
 
     public void addStudent(Uczen student) {

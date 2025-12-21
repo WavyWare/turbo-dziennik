@@ -7,6 +7,13 @@ public class Nauczyciel {
     private String username;
     private String passwordHash;
 
+    public Nauczyciel(String fullName) {
+        this.id = nextId++;
+        this.fullName = fullName;
+        this.username = null;
+        this.passwordHash = null;
+    }
+
     public Nauczyciel(String fullName, String username, String password) {
         this.id = nextId++;
         this.fullName = fullName;

@@ -17,21 +17,58 @@ public class DziennikLekcyjny {
         this.teachers = teachers;
         this.subjects = subjects;
         this.grades = grades;
+        this.lessons = new ArrayList<>();
     }
 
-    public void login(String username, String password) {
+    public boolean login(String username, String password) {
         if (loggedAs != null) {
-            return;
+            return false;
         }
 
-        Nauczyciel result = teachers.stream()
-                .filter(x -> username.equals(x.getUsername()))
-                .filter(x -> Util.hash(password).equals(x.getPasswordHash()))
-                .findFirst()
-                .orElseThrow();
+        try {
+            Nauczyciel result = teachers.stream()
+                    .filter(x -> username.equals(x.getUsername()))
+                    .filter(x -> Util.hash(password).equals(x.getPasswordHash()))
+                    .findFirst()
+                    .orElseThrow();
 
-        System.out.println("Logging in" + result.getUsername() + "...");
-        loggedAs = result;
+            loggedAs = result;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public void logout() {
+        loggedAs = null;
+    }
+
+    public static Nauczyciel getLoggedAs() {
+        return loggedAs;
+    }
+
+    public List<Klasa> getGroups() {
+        return groups;
+    }
+
+    public List<Nauczyciel> getTeachers() {
+        return teachers;
+    }
+
+    public List<Przedmiot> getSubjects() {
+        return subjects;
+    }
+
+    public List<Ocena> getGrades() {
+        return grades;
+    }
+
+    public List<Lekcja> getLessons() {
+        return lessons;
+    }
+
+    public void addLesson(Lekcja lesson) {
+        lessons.add(lesson);
     }
 
     private double reportAverageGrade(Uczen student) {
