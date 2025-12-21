@@ -44,10 +44,6 @@ public class Klasa {
         return className;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

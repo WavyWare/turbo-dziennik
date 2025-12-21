@@ -26,10 +26,6 @@ public class Przedmiot {
         return type;
     }
 
-    public void setType(TypPrzedmiotu type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         return type.getName();

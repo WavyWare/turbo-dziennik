@@ -25,24 +25,12 @@ public class Nauczyciel {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
     }
 
     public String getPasswordHash() {
         return passwordHash;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override

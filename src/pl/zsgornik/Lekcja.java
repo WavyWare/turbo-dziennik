@@ -41,40 +41,20 @@ public class Lekcja {
         return null;
     }
 
-    public List<Obecnosc> getAttendances() {
-        return attendances;
-    }
-
     public Przedmiot getSubject() {
         return subject;
-    }
-
-    public void setSubject(Przedmiot subject) {
-        this.subject = subject;
-    }
-
-    public Nauczyciel getTeacher() {
-        return teacher;
-    }
-
-    public void setTeacher(Nauczyciel teacher) {
-        this.teacher = teacher;
     }
 
     public Klasa getGroup() {
         return group;
     }
 
-    public void setGroup(Klasa group) {
-        this.group = group;
-    }
-
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public List<Obecnosc> getAttendances() {
+        return attendances;
     }
 
     @Override

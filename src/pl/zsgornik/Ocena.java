@@ -44,27 +44,7 @@ public class Ocena {
         return comment;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
     public Uczen getStudent() {
         return student;
-    }
-
-    public void setStudent(Uczen student) {
-        this.student = student;
-    }
-
-    public Lekcja getLesson() {
-        return lesson;
-    }
-
-    public void setLesson(Lekcja lesson) {
-        this.lesson = lesson;
     }
 }
