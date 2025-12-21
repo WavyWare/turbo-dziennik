@@ -9,9 +9,9 @@ public class ObecnosciScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== ZARZĄDZANIE OBECNOŚCIAMI ===");
-        System.out.println("\n1. Wyświetl obecności dla lekcji");
-        System.out.println("2. Zarejestruj obecności");
+        System.out.println("\n=== OBECNOŚCI ===");
+        System.out.println("\n1. Wyświetl obecności");
+        System.out.println("2. Zarejestruj obecność");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -29,7 +29,8 @@ public class ObecnosciScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\n✗ Nieprawidłowa opcja! Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
         }
@@ -39,8 +40,8 @@ public class ObecnosciScreen extends Screen {
         System.out.println("\n=== OBECNOŚCI ===");
         List<Lekcja> lessons = dziennik.getLessons();
         if (lessons.isEmpty()) {
-            System.out.println("Brak lekcji w systemie.");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Brak lekcji w systemie");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
             return;
         }
@@ -49,13 +50,13 @@ public class ObecnosciScreen extends Screen {
         for (int i = 0; i < lessons.size(); i++) {
             System.out.println((i + 1) + ". " + lessons.get(i));
         }
-        System.out.print("Wybierz lekcję (numer): ");
+        System.out.print("Wybierz lekcję: ");
 
         try {
             int lessonIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (lessonIndex < 0 || lessonIndex >= lessons.size()) {
-                System.out.println("✗ Nieprawidłowy numer lekcji!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Nieprawidłowy numer lekcji.");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -74,8 +75,8 @@ public class ObecnosciScreen extends Screen {
             System.out.println("\nNaciśnij Enter, aby kontynuować...");
             menuManager.getScanner().nextLine();
         } catch (NumberFormatException e) {
-            System.out.println("✗ Nieprawidłowy format liczby!");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Nieprawidłowy format liczby");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
         }
     }
@@ -84,8 +85,8 @@ public class ObecnosciScreen extends Screen {
         System.out.println("\n=== REJESTROWANIE OBECNOŚCI ===");
         List<Lekcja> lessons = dziennik.getLessons();
         if (lessons.isEmpty()) {
-            System.out.println("Brak lekcji w systemie.");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Brak lekcji w systemie");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
             return;
         }
@@ -94,13 +95,13 @@ public class ObecnosciScreen extends Screen {
         for (int i = 0; i < lessons.size(); i++) {
             System.out.println((i + 1) + ". " + lessons.get(i));
         }
-        System.out.print("Wybierz lekcję (numer): ");
+        System.out.print("Wybierz lekcję: ");
 
         try {
             int lessonIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (lessonIndex < 0 || lessonIndex >= lessons.size()) {
-                System.out.println("✗ Nieprawidłowy numer lekcji!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Nieprawidłowy numer lekcji.");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -109,8 +110,8 @@ public class ObecnosciScreen extends Screen {
             List<Uczen> students = lesson.getGroup().getStudents();
             
             if (students.isEmpty()) {
-                System.out.println("Brak uczniów w klasie.");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Brak uczniów w klasie");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -119,27 +120,27 @@ public class ObecnosciScreen extends Screen {
             for (int i = 0; i < students.size(); i++) {
                 System.out.println((i + 1) + ". " + students.get(i).getFullName());
             }
-            System.out.print("Wybierz ucznia (numer): ");
+            System.out.print("Wybierz ucznia: ");
             
             int studentIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (studentIndex < 0 || studentIndex >= students.size()) {
-                System.out.println("✗ Nieprawidłowy numer ucznia!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Nieprawidłowy numer ucznia");
+            System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
 
-            System.out.println("\nStatusy obecności:");
+            System.out.println("\nStatus obecności:");
             StatusObecnosci[] statuses = StatusObecnosci.values();
             for (int i = 0; i < statuses.length; i++) {
                 System.out.println((i + 1) + ". " + statuses[i].getFullName());
             }
-            System.out.print("Wybierz status (numer): ");
+            System.out.print("Wybierz status: ");
             
             int statusIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (statusIndex < 0 || statusIndex >= statuses.length) {
-                System.out.println("✗ Nieprawidłowy numer statusu!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Nieprawidłowy numer statusu");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -149,16 +150,16 @@ public class ObecnosciScreen extends Screen {
             
             try {
                 lesson.registerAttendance(student, status);
-                System.out.println("\n✓ Zarejestrowano obecność: " + student.getFullName() + " - " + status.getFullName());
+                System.out.println("\nZarejestrowano obecność: " + student.getFullName() + " - " + status.getFullName());
             } catch (IllegalArgumentException e) {
-                System.out.println("\n✗ Błąd: " + e.getMessage());
+                System.out.println("\nBłąd: " + e.getMessage());
             }
             
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
         } catch (NumberFormatException e) {
-            System.out.println("✗ Nieprawidłowy format liczby!");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Nieprawidłowy format liczby");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
         }
     }

@@ -24,13 +24,13 @@ public class LoginScreen extends Screen {
         boolean success = dziennik.login(username, password);
         
         if (success) {
-            System.out.println("\n✓ Zalogowano pomyślnie jako: " + DziennikLekcyjny.getLoggedAs().getFullName());
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().getFullName());
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
             menuManager.replaceScreen(new MainMenuScreen(menuManager, dziennik));
         } else {
-            System.out.println("\n✗ Błąd logowania! Nieprawidłowa nazwa użytkownika lub hasło.");
-            System.out.println("Naciśnij Enter, aby spróbować ponownie...");
+            System.out.println("\nNieprawidłowa nazwa użytkownika lub hasło.");
+            System.out.println("Naciśnij Enter aby spróbować ponownie...");
             menuManager.getScanner().nextLine();
         }
     }

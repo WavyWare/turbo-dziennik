@@ -9,8 +9,8 @@ public class OcenyScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== ZARZĄDZANIE OCENAMI ===");
-        System.out.println("\n1. Wyświetl wszystkie oceny");
+        System.out.println("\n=== OCENY ===");
+        System.out.println("\n1. Lista ocen");
         System.out.println("2. Dodaj ocenę");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
@@ -23,15 +23,14 @@ public class OcenyScreen extends Screen {
                 displayGrades();
                 break;
             case "2":
-                System.out.println("\nFunkcja w trakcie implementacji...");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                // do zrobienia
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\n✗ Nieprawidłowa opcja! Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
         }
@@ -41,7 +40,7 @@ public class OcenyScreen extends Screen {
         System.out.println("\n=== LISTA OCEN ===");
         List<Ocena> grades = dziennik.getGrades();
         if (grades.isEmpty()) {
-            System.out.println("Brak ocen w systemie.");
+            System.out.println("Brak ocen w systemie");
         } else {
             for (int i = 0; i < grades.size(); i++) {
                 Ocena grade = grades.get(i);

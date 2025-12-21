@@ -9,8 +9,8 @@ public class PrzedmiotyScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== ZARZĄDZANIE PRZEDMIOTAMI ===");
-        System.out.println("\n1. Wyświetl wszystkie przedmioty");
+        System.out.println("\n=== PRZEDMIOTY ===");
+        System.out.println("\n1. Lista przedmiotów");
         System.out.println("2. Dodaj przedmiot");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
@@ -23,15 +23,14 @@ public class PrzedmiotyScreen extends Screen {
                 displaySubjects();
                 break;
             case "2":
-                System.out.println("\nFunkcja w trakcie implementacji...");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                // do zrobienia
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\n✗ Nieprawidłowa opcja! Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
         }
@@ -41,7 +40,7 @@ public class PrzedmiotyScreen extends Screen {
         System.out.println("\n=== LISTA PRZEDMIOTÓW ===");
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            System.out.println("Brak przedmiotów w systemie.");
+            System.out.println("Brak przedmiotów w systemie");
         } else {
             for (int i = 0; i < subjects.size(); i++) {
                 Przedmiot subject = subjects.get(i);

@@ -7,13 +7,13 @@ public class MainMenuScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== GŁÓWNE MENU ===");
+        System.out.println("\n=== MENU GŁÓWNE ===");
         System.out.println("Zalogowany jako: " + DziennikLekcyjny.getLoggedAs().getFullName());
-        System.out.println("\n1. Zarządzaj lekcjami");
-        System.out.println("2. Zarządzaj ocenami");
-        System.out.println("3. Zarządzaj obecnościami");
-        System.out.println("4. Zarządzaj klasami");
-        System.out.println("5. Zarządzaj przedmiotami");
+        System.out.println("\n1. Lekcje");
+        System.out.println("2. Oceny");
+        System.out.println("3. Obecności");
+        System.out.println("4. Klasy");
+        System.out.println("5. Przedmioty");
         System.out.println("6. Wyloguj");
         System.out.println("0. Wyjście");
         System.out.print("\nWybierz opcję: ");
@@ -39,17 +39,18 @@ public class MainMenuScreen extends Screen {
                 break;
             case "6":
                 dziennik.logout();
-                System.out.println("\n✓ Wylogowano pomyślnie.");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nWylogowano pomyślnie");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 menuManager.replaceScreen(new LoginScreen(menuManager, dziennik));
                 break;
             case "0":
-                System.out.println("\nDo widzenia!");
+                System.out.println("\nDo widzenia.");
                 menuManager.stop();
                 break;
             default:
-                System.out.println("\n✗ Nieprawidłowa opcja! Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
         }

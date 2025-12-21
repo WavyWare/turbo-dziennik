@@ -10,9 +10,9 @@ public class LekcjeScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== ZARZĄDZANIE LEKCJAMI ===");
-        System.out.println("\n1. Wyświetl wszystkie lekcje");
-        System.out.println("2. Dodaj nową lekcję");
+        System.out.println("\n=== LEKCJE ===");
+        System.out.println("\n1. Lista lekcji");
+        System.out.println("2. Dodaj lekcję");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -30,7 +30,8 @@ public class LekcjeScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\n✗ Nieprawidłowa opcja! Naciśnij Enter, aby kontynuować...");
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
         }
@@ -51,12 +52,12 @@ public class LekcjeScreen extends Screen {
     }
 
     private void addLesson() {
-        System.out.println("\n=== DODAWANIE NOWEJ LEKCJI ===");
+        System.out.println("\n=== DODAWANIE LEKCJI ===");
         
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            System.out.println("Brak przedmiotów w systemie. Najpierw dodaj przedmiot.");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Brak przedmiotów w systemie");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
             return;
         }
@@ -65,13 +66,13 @@ public class LekcjeScreen extends Screen {
         for (int i = 0; i < subjects.size(); i++) {
             System.out.println((i + 1) + ". " + subjects.get(i));
         }
-        System.out.print("Wybierz przedmiot (numer): ");
+        System.out.print("Wybierz przedmiot: ");
         
         try {
             int subjectIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (subjectIndex < 0 || subjectIndex >= subjects.size()) {
-                System.out.println("✗ Nieprawidłowy numer przedmiotu!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Nieprawidłowy numer przedmiotu");
+            System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -81,8 +82,8 @@ public class LekcjeScreen extends Screen {
 
             List<Klasa> classes = dziennik.getGroups();
             if (classes.isEmpty()) {
-                System.out.println("Brak klas w systemie. Najpierw dodaj klasę.");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Brak klas w systemie");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -91,12 +92,12 @@ public class LekcjeScreen extends Screen {
             for (int i = 0; i < classes.size(); i++) {
                 System.out.println((i + 1) + ". " + classes.get(i));
             }
-            System.out.print("Wybierz klasę (numer): ");
+            System.out.print("Wybierz klasę: ");
             
             int classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (classIndex < 0 || classIndex >= classes.size()) {
-                System.out.println("✗ Nieprawidłowy numer klasy!");
-                System.out.println("Naciśnij Enter, aby kontynuować...");
+                System.out.println("Nieprawidłowy numer klasy");
+                System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 return;
             }
@@ -105,12 +106,12 @@ public class LekcjeScreen extends Screen {
             Lekcja lesson = new Lekcja(subject, teacher, klasa, LocalDate.now());
             dziennik.addLesson(lesson);
             
-            System.out.println("\n✓ Dodano lekcję: " + lesson);
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("\nDodano lekcję: " + lesson);
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
         } catch (NumberFormatException e) {
-            System.out.println("✗ Nieprawidłowy format liczby!");
-            System.out.println("Naciśnij Enter, aby kontynuować...");
+            System.out.println("Nieprawidłowy format liczby");
+            System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
         }
     }
