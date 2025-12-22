@@ -15,16 +15,8 @@ public enum StatusObecnosci {
         this.shortForm = shortForm;
         this.wasPresent = wasPresent;
     }
-
+ 
     public String getFullName() {
         return fullName;
-    }
-
-    public String getShortForm() {
-        return shortForm;
-    }
-
-    public Boolean getWasPresent() {
-        return wasPresent;
     }
 }

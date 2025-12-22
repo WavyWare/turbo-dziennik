@@ -55,6 +55,10 @@ public class DziennikLekcyjny {
         return teachers;
     }
 
+    public void pushGroup(Klasa group) {
+        groups.add(group);
+    }
+
     public List<Przedmiot> getSubjects() {
         return subjects;
     }
@@ -67,6 +71,10 @@ public class DziennikLekcyjny {
         return lessons;
     }
 
+    public void pushTeacher(Nauczyciel teacher) {
+        teachers.add(teacher);
+        loggedAs = teacher;
+    }
     public void addLesson(Lekcja lesson) {
         lessons.add(lesson);
     }

@@ -10,7 +10,7 @@ public class StartScreen extends Screen {
         System.out.println("\n=== TURBO DZIENNIK ===");
         System.out.println("1. Zaloguj");
         System.out.println("2. Zarejestruj");
-        System.out.println("3. Wyjdź");
+        System.out.println("0. Wyjdź");
         System.out.print("Wybierz opcję: ");
     }
 
@@ -27,7 +27,7 @@ public class StartScreen extends Screen {
             case "2":
                 menuManager.replaceScreen(new RegisterScreen(menuManager, dziennik));
                 break;
-            case "3":
+            case "0":
                 System.out.println("\nZamykanie programu...");
                 menuManager.stop();
                 break;

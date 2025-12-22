@@ -23,7 +23,16 @@ public class KlasyScreen extends Screen {
                 displayClasses();
                 break;
             case "2":
-                // do zrobienia
+                String className = menuManager.getScanner().nextLine();
+                if (className.isEmpty()) {
+                    System.out.println("Nazwa klasy nie może być pusta");
+                    throw new IllegalArgumentException("Nazwa klasy nie może być pusta");
+                }
+                if (dziennik.getGroups().stream().anyMatch(x -> x.getClassName().equals(className))) {
+                    System.out.println("Klasa o tej nazwie już istnieje");
+                    throw new IllegalArgumentException("Klasa o tej nazwie już istnieje");
+                }
+                dziennik.pushGroup(new Klasa(className, DziennikLekcyjny.getLoggedAs()));
                 break;
             case "0":
                 menuManager.popScreen();
