@@ -1,7 +1,9 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
 
 import java.time.LocalDate;
 import java.util.List;
+import pl.zsgornik.model.*;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class LekcjeScreen extends Screen {
     public LekcjeScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {

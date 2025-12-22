@@ -1,8 +1,10 @@
-package pl.zsgornik;
+package pl.zsgornik.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
+import pl.zsgornik.model.*;
+import pl.zsgornik.util.Util;
 
 public class DziennikLekcyjny {
     private List<Klasa> groups;

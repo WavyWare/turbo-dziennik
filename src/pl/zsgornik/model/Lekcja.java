@@ -1,8 +1,9 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import pl.zsgornik.enums.StatusObecnosci;
 
 public class Lekcja {
     private Przedmiot subject;

@@ -1,4 +1,6 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
+
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class MainMenuScreen extends Screen {
     public MainMenuScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {

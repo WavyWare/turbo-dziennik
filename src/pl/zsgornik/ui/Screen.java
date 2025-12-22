@@ -1,4 +1,6 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
+
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public abstract class Screen {
     protected MenuManager menuManager;
@@ -12,4 +14,3 @@ public abstract class Screen {
     public abstract void display();
     public abstract void handleInput(String input);
 }
-

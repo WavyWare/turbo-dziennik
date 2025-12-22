@@ -1,7 +1,8 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
 
 import java.util.Stack;
 import java.util.Scanner;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class MenuManager {
     private Stack<Screen> screenStack;
@@ -58,4 +59,3 @@ public class MenuManager {
         return scanner;
     }
 }
-

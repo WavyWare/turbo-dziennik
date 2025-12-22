@@ -1,6 +1,9 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
 
 import java.util.List;
+import pl.zsgornik.model.*;
+import pl.zsgornik.enums.TypPrzedmiotu;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class PrzedmiotyScreen extends Screen {
     public PrzedmiotyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {

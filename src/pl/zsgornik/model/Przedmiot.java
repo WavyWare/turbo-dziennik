@@ -1,7 +1,8 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import pl.zsgornik.enums.TypPrzedmiotu;
 
 public class Przedmiot {
     private final List<Nauczyciel> teachers;

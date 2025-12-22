@@ -1,4 +1,4 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
 
 import java.time.LocalDate;
 

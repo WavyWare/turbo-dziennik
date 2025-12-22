@@ -1,6 +1,8 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
 
 import java.util.List;
+import pl.zsgornik.model.*;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class UczenScreen extends Screen {
     public UczenScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {

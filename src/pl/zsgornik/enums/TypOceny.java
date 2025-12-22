@@ -1,4 +1,4 @@
-package pl.zsgornik;
+package pl.zsgornik.enums;
 
 public enum TypOceny {
     CELUJACA(6),

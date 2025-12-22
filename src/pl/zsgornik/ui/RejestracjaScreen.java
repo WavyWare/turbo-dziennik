@@ -1,4 +1,7 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
+
+import pl.zsgornik.model.Nauczyciel;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class RejestracjaScreen extends Screen {
     public RejestracjaScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {

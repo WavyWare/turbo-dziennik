@@ -1,4 +1,6 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
+
+import pl.zsgornik.enums.StatusObecnosci;
 
 public class Obecnosc {
     private final Uczen student;

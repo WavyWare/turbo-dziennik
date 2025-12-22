@@ -1,9 +1,9 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
 
 import java.util.Objects;
 
 public class Uczen {
-    private String fullName;
+    private final String fullName;
 
     public Uczen(String fullName) {
         this.fullName = fullName;

@@ -1,4 +1,6 @@
-package pl.zsgornik;
+package pl.zsgornik.model;
+
+import pl.zsgornik.util.Util;
 
 public class Nauczyciel {
     private String fullName;

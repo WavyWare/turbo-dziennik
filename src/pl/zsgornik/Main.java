@@ -1,6 +1,11 @@
 package pl.zsgornik;
 
 import java.util.ArrayList;
+import pl.zsgornik.model.*;
+import pl.zsgornik.enums.TypPrzedmiotu;
+import pl.zsgornik.service.DziennikLekcyjny;
+import pl.zsgornik.ui.MenuManager;
+import pl.zsgornik.ui.StartScreen;
 
 public class Main {
     public static void main(String[] args) {

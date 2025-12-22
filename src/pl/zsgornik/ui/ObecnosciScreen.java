@@ -1,6 +1,9 @@
-package pl.zsgornik;
+package pl.zsgornik.ui;
 
 import java.util.List;
+import pl.zsgornik.model.*;
+import pl.zsgornik.enums.StatusObecnosci;
+import pl.zsgornik.service.DziennikLekcyjny;
 
 public class ObecnosciScreen extends Screen {
     public ObecnosciScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
