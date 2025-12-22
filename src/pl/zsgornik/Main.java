@@ -42,8 +42,8 @@ public class Main {
         DziennikLekcyjny dziennik = new DziennikLekcyjny(groups, teachers, subjects, grades);
 
         MenuManager menuManager = new MenuManager(dziennik);
-        menuManager.pushScreen(new LoginScreen(menuManager, dziennik));
-        
+        menuManager.pushScreen(new StartScreen(menuManager, dziennik));
+
         menuManager.start();
     }
 }
