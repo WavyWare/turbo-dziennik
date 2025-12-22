@@ -19,4 +19,8 @@ public enum StatusObecnosci {
     public String getFullName() {
         return fullName;
     }
+
+    public Boolean getWasPresent() {
+        return wasPresent;
+    }
 }

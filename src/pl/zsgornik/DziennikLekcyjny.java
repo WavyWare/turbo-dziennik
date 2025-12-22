@@ -87,7 +87,7 @@ public class DziennikLekcyjny {
         lessons.add(lesson);
     }
 
-    private double reportAverageGrade(Uczen student) {
+    public double reportAverageGrade(Uczen student) {
         OptionalDouble avg = grades.stream()
                 .filter(x -> x.getStudent().equals(student) && x.getStudent().hashCode() == student.hashCode())
                 .mapToDouble(Ocena::getValue)
@@ -96,17 +96,27 @@ public class DziennikLekcyjny {
         return avg.isPresent() ? avg.getAsDouble(): -1;
     }
 
-    private double reportPresencePercent(Uczen student) {
-        Klasa group = groups.stream()
-                .filter(x -> x.getStudents().contains(student))
-                .findFirst()
-                .orElseThrow();
+    public double reportPresencePercent(Uczen student) {
+        int allLessons = 0;
+        int presentLessons = 0;
 
-        int allLessons = Math.toIntExact(groups.stream()
-                .filter(x -> x.equals(group) && x.hashCode() == group.hashCode())
-                .count());
+        for (Lekcja lesson : lessons) {
+            if (lesson.getGroup().getStudents().contains(student)) {
+                allLessons++;
+                Obecnosc attendance = lesson.findAttendance(student);
+                if (attendance != null) {
+                    Boolean wasPresent = attendance.getStatus().getWasPresent();
+                    if (Boolean.TRUE.equals(wasPresent)) {
+                        presentLessons++;
+                    }
+                }
+            }
+        }
 
-        int lessonsPresentByStudent;
-        return 0;
+        if (allLessons == 0) {
+            return -1;
+        }
+
+        return (presentLessons * 100.0) / allLessons;
     }
 }

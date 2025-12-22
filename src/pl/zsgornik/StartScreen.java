@@ -25,7 +25,7 @@ public class StartScreen extends Screen {
                 menuManager.replaceScreen(new LoginScreen(menuManager, dziennik));
                 break;
             case "2":
-                menuManager.replaceScreen(new RegisterScreen(menuManager, dziennik));
+                menuManager.replaceScreen(new RejestracjaScreen(menuManager, dziennik));
                 break;
             case "0":
                 System.out.println("\nZamykanie programu...");

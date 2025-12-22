@@ -12,6 +12,8 @@ public class PrzedmiotyScreen extends Screen {
         System.out.println("\n=== PRZEDMIOTY ===");
         System.out.println("\n1. Lista przedmiotów");
         System.out.println("2. Dodaj przedmiot");
+        System.out.println("3. Usuń przedmiot");
+        System.out.println("4. Zmień typ przedmiotu");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -23,6 +25,26 @@ public class PrzedmiotyScreen extends Screen {
                 displaySubjects();
                 break;
             case "2":
+                addSubject();
+                break;
+            case "3":
+                removeSubject();
+                break;
+            case "4":
+                editSubject();
+                break;
+            case "0":
+                menuManager.popScreen();
+                break;
+            default:
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
+                menuManager.getScanner().nextLine();
+                break;
+        }
+    }
+
+    private void addSubject() {
                 System.out.println("\n=== DODAJ PRZEDMIOT ===");
                 TypPrzedmiotu[] types = TypPrzedmiotu.values();
                 System.out.println("Wybierz typ przedmiotu:");
@@ -52,16 +74,98 @@ public class PrzedmiotyScreen extends Screen {
                 System.out.println("\nDodano przedmiot: " + wybranyTyp.getName());
                 System.out.println("Naciśnij Enter, aby kontynuować...");
                 menuManager.getScanner().nextLine();
-                break;
-            case "0":
-                menuManager.popScreen();
-                break;
-            default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
-                break;
+    }
+
+    private void removeSubject() {
+        List<Przedmiot> subjects = dziennik.getSubjects();
+        if (subjects.isEmpty()) {
+            System.out.println("\nBrak przedmiotów do usunięcia.");
+            System.out.println("Naciśnij Enter aby kontynuować...");
+            menuManager.getScanner().nextLine();
+            return;
         }
+
+        System.out.println("\n=== USUWANIE PRZEDMIOTU ===");
+        for (int i = 0; i < subjects.size(); i++) {
+            System.out.println((i + 1) + ". " + subjects.get(i));
+        }
+
+        System.out.print("Podaj numer przedmiotu do usunięcia: ");
+        try {
+            int idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+            if (idx < 0 || idx >= subjects.size()) {
+                System.out.println("Nieprawidłowy numer przedmiotu.");
+            } else {
+                Przedmiot removed = subjects.remove(idx);
+                System.out.println("Usunięto przedmiot: " + removed);
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy format liczby.");
+        }
+
+        System.out.println("Naciśnij Enter aby kontynuować...");
+        menuManager.getScanner().nextLine();
+    }
+
+    private void editSubject() {
+        List<Przedmiot> subjects = dziennik.getSubjects();
+        if (subjects.isEmpty()) {
+            System.out.println("\nBrak przedmiotów do modyfikacji.");
+            System.out.println("Naciśnij Enter aby kontynuować...");
+            menuManager.getScanner().nextLine();
+            return;
+        }
+
+        System.out.println("\n=== MODYFIKACJA PRZEDMIOTU ===");
+        for (int i = 0; i < subjects.size(); i++) {
+            System.out.println((i + 1) + ". " + subjects.get(i));
+        }
+
+        System.out.print("Podaj numer przedmiotu do zmiany: ");
+        int idx;
+        try {
+            idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+        } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy format liczby.");
+            System.out.println("Naciśnij Enter aby kontynuować...");
+            menuManager.getScanner().nextLine();
+            return;
+        }
+
+        if (idx < 0 || idx >= subjects.size()) {
+            System.out.println("Nieprawidłowy numer przedmiotu.");
+            System.out.println("Naciśnij Enter aby kontynuować...");
+            menuManager.getScanner().nextLine();
+            return;
+        }
+
+        Przedmiot subject = subjects.get(idx);
+
+        System.out.println("\nAktualny typ: " + subject.getType().getName());
+        TypPrzedmiotu[] types = TypPrzedmiotu.values();
+        System.out.println("Wybierz nowy typ:");
+        for (int i = 0; i < types.length; i++) {
+            System.out.println((i + 1) + ". " + types[i].getName());
+        }
+
+        int selectedTypeIdx = -1;
+        while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+            System.out.print("Podaj numer typu przedmiotu: ");
+            try {
+                String line = menuManager.getScanner().nextLine().trim();
+                selectedTypeIdx = Integer.parseInt(line) - 1;
+            } catch (NumberFormatException e) {
+                selectedTypeIdx = -1;
+            }
+            if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+                System.out.println("Nieprawidłowy numer typu przedmiotu.");
+            }
+        }
+
+        subject.setType(types[selectedTypeIdx]);
+        System.out.println("\nZmieniono typ przedmiotu na: " + subject.getType().getName());
+        System.out.println("Naciśnij Enter aby kontynuować...");
+        menuManager.getScanner().nextLine();
     }
 
     private void displaySubjects() {

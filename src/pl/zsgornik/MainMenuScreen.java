@@ -14,7 +14,8 @@ public class MainMenuScreen extends Screen {
         System.out.println("3. Obecności");
         System.out.println("4. Klasy");
         System.out.println("5. Przedmioty");
-        System.out.println("6. Wyloguj");
+        System.out.println("6. Uczniowie");
+        System.out.println("7. Wyloguj");
         System.out.println("0. Wyjście");
         System.out.print("\nWybierz opcję: ");
     }
@@ -38,6 +39,9 @@ public class MainMenuScreen extends Screen {
                 menuManager.pushScreen(new PrzedmiotyScreen(menuManager, dziennik));
                 break;
             case "6":
+                menuManager.pushScreen(new UczenScreen(menuManager, dziennik));
+                break;
+            case "7":
                 dziennik.logout();
                 System.out.println("\nWylogowano pomyślnie");
                 System.out.println("Naciśnij Enter aby kontynuować...");
