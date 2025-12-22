@@ -67,6 +67,14 @@ public class DziennikLekcyjny {
         return grades;
     }
 
+    public void pushGrade(Ocena grade) {
+        grades.add(grade);
+    }
+
+    public void pushSubject(Przedmiot subject) {
+        subjects.add(subject);
+    }
+
     public List<Lekcja> getLessons() {
         return lessons;
     }

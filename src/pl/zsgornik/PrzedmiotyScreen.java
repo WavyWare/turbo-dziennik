@@ -23,7 +23,35 @@ public class PrzedmiotyScreen extends Screen {
                 displaySubjects();
                 break;
             case "2":
-                // do zrobienia
+                System.out.println("\n=== DODAJ PRZEDMIOT ===");
+                TypPrzedmiotu[] types = TypPrzedmiotu.values();
+                System.out.println("Wybierz typ przedmiotu:");
+                for (int i = 0; i < types.length; i++) {
+                    System.out.println((i + 1) + ". " + types[i].getName());
+                }
+
+                int selectedTypeIdx = -1;
+                while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+                    System.out.print("Podaj numer typu przedmiotu: ");
+                    try {
+                        String line = menuManager.getScanner().nextLine().trim();
+                        selectedTypeIdx = Integer.parseInt(line) - 1;
+                    } catch (NumberFormatException e) {
+                        selectedTypeIdx = -1;
+                    }
+                    if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+                        System.out.println("Nieprawidłowy numer typu przedmiotu.");
+                    }
+                }
+
+                TypPrzedmiotu wybranyTyp = types[selectedTypeIdx];
+
+                Przedmiot nowyPrzedmiot = new Przedmiot(wybranyTyp);
+                dziennik.pushSubject(nowyPrzedmiot);
+
+                System.out.println("\nDodano przedmiot: " + wybranyTyp.getName());
+                System.out.println("Naciśnij Enter, aby kontynuować...");
+                menuManager.getScanner().nextLine();
                 break;
             case "0":
                 menuManager.popScreen();

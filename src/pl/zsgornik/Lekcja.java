@@ -45,6 +45,10 @@ public class Lekcja {
         return subject;
     }
 
+    public Nauczyciel getTeacher() {
+        return teacher;
+    }
+
     public Klasa getGroup() {
         return group;
     }

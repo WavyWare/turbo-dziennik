@@ -31,7 +31,7 @@ public class KlasyScreen extends Screen {
                 if (dziennik.getGroups().stream().anyMatch(x -> x.getClassName().equals(className))) {
                     System.out.println("Klasa o tej nazwie już istnieje");
                     throw new IllegalArgumentException("Klasa o tej nazwie już istnieje");
-                }
+                } 
                 dziennik.pushGroup(new Klasa(className, DziennikLekcyjny.getLoggedAs()));
                 break;
             case "0":
