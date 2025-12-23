@@ -15,7 +15,7 @@ public class UczenScreen extends Screen {
         System.out.println("\n1. Lista uczniów (według klas)");
         System.out.println("2. Dodaj ucznia do klasy");
         System.out.println("3. Raport frekwencji ucznia");
-        System.out.println("4. Raport średniej ocen ucznia");
+        System.out.println("4. Raport średnich ocen ucznia");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -204,18 +204,7 @@ public class UczenScreen extends Screen {
     }
 
     private void reportGrades() {
-        System.out.println("\n=== RAPORT ŚREDNIEJ OCEN UCZNIA ===");
-        Uczen student = chooseStudentWithClass();
-        if (student == null) {
-            return;
-        }
-
-        double avg = dziennik.reportAverageGrade(student);
-        if (avg < 0) {
-            System.out.println("Brak ocen dla tego ucznia.");
-        } else {
-            System.out.printf("Średnia ocen ucznia %s: %.2f%n", student.getFullName(), avg);
-        }
+        dziennik.printStudentReport(chooseStudentWithClass());
         System.out.println("Naciśnij Enter aby kontynuować...");
         menuManager.getScanner().nextLine();
     }

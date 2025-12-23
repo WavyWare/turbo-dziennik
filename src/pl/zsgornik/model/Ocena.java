@@ -47,4 +47,9 @@ public class Ocena {
     public Uczen getStudent() {
         return student;
     }
+
+    public Lekcja getLesson() {
+        return lesson;
+    }
+
 }

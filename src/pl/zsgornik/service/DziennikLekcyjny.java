@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.OptionalDouble;
 import pl.zsgornik.model.*;
+import pl.zsgornik.util.Tuple;
 import pl.zsgornik.util.Util;
 
+import javax.security.auth.Subject;
+
 public class DziennikLekcyjny {
-    private List<Klasa> groups;
-    private List<Nauczyciel> teachers;
-    private List<Przedmiot> subjects;
-    private List<Ocena> grades;
-    private List<Lekcja> lessons;
+    private final List<Klasa> groups;
+    private final List<Nauczyciel> teachers;
+    private final List<Przedmiot> subjects;
+    private final List<Ocena> grades;
+    private final List<Lekcja> lessons;
     private static Nauczyciel loggedAs;
 
     public DziennikLekcyjny(ArrayList<Klasa> groups, ArrayList<Nauczyciel> teachers, ArrayList<Przedmiot> subjects, ArrayList<Ocena> grades) {
@@ -28,13 +31,11 @@ public class DziennikLekcyjny {
         }
 
         try {
-            Nauczyciel result = teachers.stream()
+            loggedAs = teachers.stream()
                     .filter(x -> username.equals(x.getUsername()))
                     .filter(x -> Util.hash(password).equals(x.getPasswordHash()))
                     .findFirst()
                     .orElseThrow();
-
-            loggedAs = result;
             return true;
         } catch (Exception e) {
             return false;
@@ -121,4 +122,81 @@ public class DziennikLekcyjny {
 
         return (presentLessons * 100.0) / allLessons;
     }
+
+    private Klasa getGroupByStudent(Uczen student) {
+        return groups.stream()
+                .filter(x -> x.getStudents().contains(student))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public List<Tuple<Przedmiot, Double>> getAverageGradeBySubjects(Uczen student) {
+        List<Tuple<Przedmiot, Double>> result = new ArrayList<>();
+        Klasa group = getGroupByStudent(student);
+
+        List<Przedmiot> groupSubjects = lessons.stream()
+                .filter(x -> x.getGroup().equals(group))
+                .map(Lekcja::getSubject)
+                .distinct()
+                .toList();
+
+        for (Przedmiot subject : groupSubjects) {
+            OptionalDouble avg = grades.stream()
+                    .filter(x -> x.getStudent().equals(student))
+                    .filter(x -> x.getLesson().getSubject().equals(subject))
+                    .mapToDouble(Ocena::getValue)
+                    .average();
+
+            if (avg.isPresent()) {
+                result.add(new Tuple<>(subject, avg.getAsDouble()));
+            } else {
+                result.add(new Tuple<>(subject, -1.0));
+            }
+        }
+        return result;
+    }
+
+
+    public void printStudentReport(Uczen student) {
+        Klasa group = getGroupByStudent(student);
+        System.out.println("----------------------------------------");
+        System.out.println("RAPORT DLA UCZNIA: " + student.getFullName());
+        System.out.println("KLASA: " + group.getClassName());
+        System.out.println("----------------------------------------");
+
+        double avgTotal = reportAverageGrade(student);
+        if (avgTotal > 0) {
+            System.out.printf("Srednia ocen ogolna: %.2f%n", avgTotal);
+        } else {
+            System.out.println("Srednia ocen ogolna: Brak ocen");
+        }
+
+        double presence = reportPresencePercent(student);
+        if (presence >= 0) {
+            System.out.printf("Frekwencja: %.2f%%%n", presence);
+        } else {
+            System.out.println("Frekwencja: Brak danych (brak lekcji)");
+        }
+
+        System.out.println("\nOCENY Z PRZEDMIOTOW:");
+        List<Tuple<Przedmiot, Double>> subjectsData = getAverageGradeBySubjects(student);
+        
+        if (subjectsData.isEmpty()) {
+            System.out.println("  Brak przedmiotow przypisanych do klasy (brak odbytych lekcji).");
+        } else {
+            for (Tuple<Przedmiot, Double> entry : subjectsData) {
+                String subjectName = entry.getFirst().toString();
+                Double avg = entry.getSecond();
+                
+                if (avg == -1.0) {
+                    System.out.println("  " + subjectName + " - Brak ocen");
+                } else {
+                    System.out.printf("  %s - %.2f%n", subjectName, avg);
+                }
+            }
+        }
+        System.out.println("----------------------------------------");
+    }
+
+
 }

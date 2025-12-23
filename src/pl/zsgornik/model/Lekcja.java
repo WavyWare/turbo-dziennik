@@ -6,10 +6,10 @@ import java.util.List;
 import pl.zsgornik.enums.StatusObecnosci;
 
 public class Lekcja {
-    private Przedmiot subject;
-    private Nauczyciel teacher;
-    private Klasa group;
-    private LocalDate date;
+    private final Przedmiot subject;
+    private final Nauczyciel teacher;
+    private final Klasa group;
+    private final LocalDate date;
     private final List<Obecnosc> attendances;
 
     public Lekcja(Przedmiot subject, Nauczyciel teacher, Klasa group, LocalDate date) {

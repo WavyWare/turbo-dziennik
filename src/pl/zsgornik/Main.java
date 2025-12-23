@@ -48,7 +48,7 @@ public class Main {
 
         MenuManager menuManager = new MenuManager(dziennik);
         menuManager.pushScreen(new StartScreen(menuManager, dziennik));
-
+        
         menuManager.start();
     }
 }
