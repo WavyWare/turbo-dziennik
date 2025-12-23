@@ -23,7 +23,7 @@ public class RejestracjaScreen extends Screen {
             System.out.println("Login nie może być pusty");
             throw new IllegalArgumentException("Login nie może być pusty");
         }
-        if (dziennik.getTeachers().stream().anyMatch(x -> x.getUsername().equals(username))) {
+        if (dziennik.getTeachers().stream().anyMatch(x -> x.username().equals(username))) {
             System.out.println("Login już istnieje");
             throw new IllegalArgumentException("Login już istnieje");
         }

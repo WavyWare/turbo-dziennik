@@ -183,7 +183,7 @@ public class PrzedmiotyScreen extends Screen {
                 if (!subject.getTeachers().isEmpty()) {
                     System.out.print(" (Nauczyciele: ");
                     for (int j = 0; j < subject.getTeachers().size(); j++) {
-                        System.out.print(subject.getTeachers().get(j).getFullName());
+                        System.out.print(subject.getTeachers().get(j).fullName());
                         if (j < subject.getTeachers().size() - 1) {
                             System.out.print(", ");
                         }

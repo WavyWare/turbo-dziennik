@@ -91,7 +91,7 @@ public class KlasyScreen extends Screen {
             for (int i = 0; i < classes.size(); i++) {
                 Klasa klasa = classes.get(i);
                 System.out.println((i + 1) + ". " + klasa.getClassName() + 
-                    " (Wychowawca: " + klasa.getSupervisor().getFullName() + 
+                    " (Wychowawca: " + klasa.getSupervisor().fullName() +
                     ", Uczniowie: " + klasa.getStudents().size() + ")");
             }
         }
@@ -111,7 +111,7 @@ public class KlasyScreen extends Screen {
         for (int i = 0; i < classes.size(); i++) {
             Klasa group = classes.get(i);
             System.out.println((i + 1) + ". " + group.getClassName() +
-                    " (Wychowawca: " + group.getSupervisor().getFullName() + ")");
+                    " (Wychowawca: " + group.getSupervisor().fullName() + ")");
         }
         System.out.println("0. Anuluj");
         System.out.print("Wybierz numer: ");
@@ -187,7 +187,7 @@ public class KlasyScreen extends Screen {
         System.out.println("\n=== WYBIERZ NAUCZYCIELA ===");
         for (int i = 0; i < teachers.size(); i++) {
             Nauczyciel teacher = teachers.get(i);
-            System.out.println((i + 1) + ". " + teacher.getFullName() + (teacher.getFullName().equals(DziennikLekcyjny.getLoggedAs().getFullName()) ? " (ty)" : ""));
+            System.out.println((i + 1) + ". " + teacher.fullName() + (teacher.fullName().equals(DziennikLekcyjny.getLoggedAs().fullName()) ? " (ty)" : ""));
         }
         System.out.println("0. Anuluj");
         System.out.print("Wybierz numer: ");

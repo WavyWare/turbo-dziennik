@@ -25,7 +25,7 @@ public class LoginScreen extends Screen {
         boolean success = dziennik.login(input, password);
         
         if (success) {
-            System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().getFullName());
+            System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().fullName());
             System.out.println("Naciśnij Enter aby kontynuować...");
             menuManager.getScanner().nextLine();
             menuManager.replaceScreen(new MainMenuScreen(menuManager, dziennik));

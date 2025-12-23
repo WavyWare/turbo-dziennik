@@ -10,7 +10,7 @@ public class MainMenuScreen extends Screen {
     @Override
     public void display() {
         System.out.println("\n=== MENU GŁÓWNE ===");
-        System.out.println("Zalogowany jako: " + DziennikLekcyjny.getLoggedAs().getFullName());
+        System.out.println("Zalogowany jako: " + DziennikLekcyjny.getLoggedAs().fullName());
         System.out.println("\n1. Lekcje");
         System.out.println("2. Oceny");
         System.out.println("3. Obecności");

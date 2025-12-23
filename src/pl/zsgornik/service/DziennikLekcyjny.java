@@ -7,8 +7,6 @@ import pl.zsgornik.model.*;
 import pl.zsgornik.util.Tuple;
 import pl.zsgornik.util.Util;
 
-import javax.security.auth.Subject;
-
 public class DziennikLekcyjny {
     private final List<Klasa> groups;
     private final List<Nauczyciel> teachers;
@@ -32,8 +30,8 @@ public class DziennikLekcyjny {
 
         try {
             loggedAs = teachers.stream()
-                    .filter(x -> username.equals(x.getUsername()))
-                    .filter(x -> Util.hash(password).equals(x.getPasswordHash()))
+                    .filter(x -> username.equals(x.username()))
+                    .filter(x -> Util.hash(password).equals(x.passwordHash()))
                     .findFirst()
                     .orElseThrow();
             return true;
