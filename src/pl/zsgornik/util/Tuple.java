@@ -9,11 +9,11 @@ public class Tuple<t1, t2> {
         this.param2 = param2;
     }
 
-    public t1 getParam1() {
+    public t1 getFirst() {
         return param1;
     }
 
-    public t2 getParam2() {
+    public t2 getSecond() {
         return param2;
     }
 }
