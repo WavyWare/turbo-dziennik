@@ -3,18 +3,11 @@ package pl.zsgornik.model;
 import pl.zsgornik.util.Util;
 
 public class Nauczyciel {
-    private String fullName;
+    private final String fullName;
     private static int nextId = 1;
     private final int id;
-    private String username;
-    private String passwordHash;
-
-    public Nauczyciel(String fullName) {
-        this.id = nextId++;
-        this.fullName = fullName;
-        this.username = null;
-        this.passwordHash = null;
-    }
+    private final String username;
+    private final String passwordHash;
 
     public Nauczyciel(String fullName, String username, String password) {
         this.id = nextId++;

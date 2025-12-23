@@ -48,7 +48,7 @@ public class MainMenuScreen extends Screen {
                 System.out.println("\nWylogowano pomyślnie");
                 System.out.println("Naciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
-                menuManager.replaceScreen(new LoginScreen(menuManager, dziennik));
+                menuManager.replaceScreen(new StartScreen(menuManager, dziennik));
                 break;
             case "0":
                 System.out.println("\nDo widzenia.");

@@ -19,11 +19,10 @@ public class LoginScreen extends Screen {
             return;
         }
 
-        String username = input;
         System.out.print("Hasło: ");
         String password = menuManager.getScanner().nextLine().trim();
 
-        boolean success = dziennik.login(username, password);
+        boolean success = dziennik.login(input, password);
         
         if (success) {
             System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().getFullName());

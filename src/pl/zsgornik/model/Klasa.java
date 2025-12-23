@@ -5,20 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Klasa {
-    private final Nauczyciel supervisor;
+    private Nauczyciel supervisor;
     private List<Uczen> students;
     private Uczen classLeader;
     private String className;
-
-    public Klasa(Nauczyciel supervisor, ArrayList<Uczen> students, Uczen classLeader, String className) {
-        this(className, supervisor, students);
-        this.classLeader = classLeader;
-    }
-
-    public Klasa(String className, Nauczyciel supervisor, ArrayList<Uczen> students) {
-        this(className, supervisor);
-        this.students = students;
-    }
 
     public Klasa(String className, Nauczyciel supervisor) {
         this.className = className;
@@ -26,10 +16,27 @@ public class Klasa {
         this.students = new ArrayList<>();
     }
 
+    public Klasa(String className) {
+        this.className = className;
+        this.students = new ArrayList<>();
+    }
+
     public void addStudent(Uczen student) {
         if (!students.contains(student)) {
             students.add(student);
         }
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public void setClassLeader(Uczen classLeader) {
+        this.classLeader = classLeader;
+    }
+
+    public void setSupervisor(Nauczyciel supervisor) {
+        this.supervisor = supervisor;
     }
 
     public Nauczyciel getSupervisor() {
