@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Klasa {
     private Nauczyciel supervisor;
-    private List<Uczen> students;
+    private final List<Uczen> students;
     private Uczen classLeader;
     private String className;
 
