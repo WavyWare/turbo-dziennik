@@ -58,4 +58,5 @@ public class MenuManager {
     public Scanner getScanner() {
         return scanner;
     }
+
 }

@@ -1,5 +1,10 @@
 package pl.zsgornik.enums;
 
+import pl.zsgornik.model.Obecnosc;
+
+import java.util.List;
+import java.util.Scanner;
+
 public enum StatusObecnosci {
     OBECNY("Obecny", "O", true),
     SPOZNIONY("Spóźniony", "S", true),
@@ -22,5 +27,38 @@ public enum StatusObecnosci {
 
     public Boolean getWasPresent() {
         return wasPresent;
+    }
+
+    public static StatusObecnosci chooseType() {
+        StatusObecnosci[] types = StatusObecnosci.values();
+
+        System.out.println("\n=== WYBIERZ TYP ===");
+        for (int i = 0; i < types.length; i++) {
+            StatusObecnosci status = types[i];
+            System.out.println((i + 1) + ". " + status.getFullName());
+        }
+        System.out.println("0. Anuluj");
+        System.out.print("Wybierz numer: ");
+
+        String input = new Scanner(System.in).nextLine();
+        int choice;
+
+        try {
+            choice = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy numer");
+            return null;
+        }
+
+        if (choice == 0) {
+            return null;
+        }
+
+        if (choice < 1 || choice > types.length) {
+            System.out.println("Numer poza zakresem");
+            return null;
+        }
+
+        return types[choice - 1];
     }
 }
