@@ -92,7 +92,7 @@ public class LekcjeScreen extends Screen {
     }
 
     private Obecnosc selectAttendance(Lekcja lesson) {
-        List<Obecnosc> attendance = null;
+        List<Obecnosc> attendance;
         try {
             attendance = lesson.getAttendances();
         } catch (NullPointerException e) {
@@ -176,7 +176,7 @@ public class LekcjeScreen extends Screen {
             }
 
             Przedmiot subject = subjects.get(subjectIndex);
-            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().get(0);
+            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().getFirst();
 
             List<Klasa> classes = dziennik.getGroups();
             if (classes.isEmpty()) {

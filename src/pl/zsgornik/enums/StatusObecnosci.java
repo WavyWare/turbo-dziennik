@@ -1,23 +1,18 @@
 package pl.zsgornik.enums;
 
-import pl.zsgornik.model.Obecnosc;
-
-import java.util.List;
 import java.util.Scanner;
 
 public enum StatusObecnosci {
-    OBECNY("Obecny", "O", true),
-    SPOZNIONY("Spóźniony", "S", true),
-    ZWOLNIONY("Zwolniony", "ZW", null),
-    NIEOBECNY("Nieobecny", "N", false);
+    OBECNY("Obecny", true),
+    SPOZNIONY("Spóźniony", true),
+    ZWOLNIONY("Zwolniony", null),
+    NIEOBECNY("Nieobecny", false);
 
     private final String fullName;
-    private final String shortForm;
     private final Boolean wasPresent;
 
-    StatusObecnosci(String fullName, String shortForm, Boolean wasPresent) {
+    StatusObecnosci(String fullName, Boolean wasPresent) {
         this.fullName = fullName;
-        this.shortForm = shortForm;
         this.wasPresent = wasPresent;
     }
  

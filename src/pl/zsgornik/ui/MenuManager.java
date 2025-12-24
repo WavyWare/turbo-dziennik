@@ -5,9 +5,9 @@ import java.util.Scanner;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 public class MenuManager {
-    private Stack<Screen> screenStack;
-    private Scanner scanner;
-    private DziennikLekcyjny dziennik;
+    private final Stack<Screen> screenStack;
+    private final Scanner scanner;
+    private final DziennikLekcyjny dziennik;
     private boolean running;
 
     public MenuManager(DziennikLekcyjny dziennik) {
