@@ -99,7 +99,7 @@ public class KlasyScreen extends Screen {
         menuManager.getScanner().nextLine();
     }
 
-    private Klasa selectClass() {
+    public static Klasa selectClass() {
         List<Klasa> classes = dziennik.getGroups();
 
         if (classes.isEmpty()) {
@@ -138,7 +138,7 @@ public class KlasyScreen extends Screen {
         return classes.get(choice - 1);
     }
 
-    private Uczen chooseStudent(Klasa group) {
+    public static Uczen chooseStudent(Klasa group) {
         List<Uczen> students = group.getStudents();
 
         if (students.isEmpty()) {

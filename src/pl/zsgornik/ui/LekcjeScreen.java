@@ -17,7 +17,8 @@ public class LekcjeScreen extends Screen {
         System.out.println("\n=== LEKCJE ===");
         System.out.println("\n1. Lista lekcji");
         System.out.println("2. Dodaj lekcję");
-        System.out.println("3. Zmień obecności");
+        System.out.println("3. Zarejestruj obecności");
+        System.out.println("4. Zmień obecności");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -32,6 +33,9 @@ public class LekcjeScreen extends Screen {
                 addLesson();
                 break;
             case "3":
+                registerClassAttendance();
+                break;
+            case "4":
                 Lekcja attendanceLesson = selectLesson();
                 assert attendanceLesson != null;
                 Obecnosc attendance = selectAttendance(attendanceLesson);
@@ -42,6 +46,7 @@ public class LekcjeScreen extends Screen {
                 attendance.setStatus(newStatus);
                 System.out.println("\nNaciśnij Enter, aby kontynuować...");
                 menuManager.getScanner().nextLine();
+                break;
             case "0":
                 menuManager.popScreen();
                 break;
@@ -53,7 +58,34 @@ public class LekcjeScreen extends Screen {
         }
     }
 
-    private Lekcja selectLesson() {
+    private void registerClassAttendance() {
+        Lekcja lesson = LekcjeScreen.selectLesson();
+        if (lesson == null) {
+            System.out.println("\nNieprawidłowa opcja");
+            System.out.println("Naciśnij Enter aby kontynuować...");
+            menuManager.getScanner().nextLine();
+            return;
+        }
+        Klasa group = lesson.getGroup();
+        List<Uczen> students = group.getStudents();
+
+        for (Uczen u : students) {
+            System.out.printf("\nTyp obecności dla %s", u);
+            StatusObecnosci type = StatusObecnosci.chooseType();
+            if (type == null) {
+                System.out.println("\nNieprawidłowa opcja");
+                System.out.println("Naciśnij Enter aby kontynuować...");
+                menuManager.getScanner().nextLine();
+                break;
+            }
+            lesson.registerAttendance(u, type);
+        }
+        System.out.println("\nDodano obecności!");
+        System.out.println("Naciśnij Enter aby kontynuować...");
+        menuManager.getScanner().nextLine();
+    }
+
+    public static Lekcja selectLesson() {
         List<Lekcja> lessons  = dziennik.getLessons();
 
         if (lessons.isEmpty()) {
