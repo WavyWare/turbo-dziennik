@@ -3,6 +3,7 @@ package pl.zsgornik.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Scanner;
 
 public class Util {
     public static String hash(String input) {
@@ -22,5 +23,15 @@ public class Util {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+    public static void pauseAndReturn(String message) {
+        System.out.printf("\n%s\n", message);
+        pauseAndReturn();
+    }
+
+    public static void pauseAndReturn() {
+        System.out.println("Naciśnij Enter aby spróbować ponownie...");
+        new Scanner(System.in).nextLine();
     }
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class OcenyScreen extends Screen {
     public OcenyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -41,84 +43,53 @@ public class OcenyScreen extends Screen {
     private void addGrade() {
         System.out.println("\n=== DODAWANIE OCENY ===");
 
-        
-        Lekcja lastTeacherLesson = null;
-        List<Lekcja> lessons = dziennik.getLessons();
-        for (int i = lessons.size() - 1; i >= 0; i--) {
-            Lekcja lesson = lessons.get(i);
-            if (lesson.getTeacher() != null && lesson.getTeacher().equals(DziennikLekcyjny.getLoggedAs())) {
-                lastTeacherLesson = lesson;
-                break;
-            }
-        }
-
-        if (lastTeacherLesson == null) {
+        Lekcja lesson = findLastTeacherLesson();
+        if (lesson == null) {
             System.out.println("Brak lekcji prowadzonych przez tego nauczyciela.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             return;
         }
 
-        List<Uczen> students = lastTeacherLesson.getGroup().getStudents();
-        if (students.isEmpty()) {
-            System.out.println("Brak uczniów w tej klasie.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+        Uczen student = KlasyScreen.chooseStudent(lesson.getGroup());
+        if (student == null) {
+            pauseAndReturn();
             return;
         }
 
-        System.out.println("\nLekcja: " + lastTeacherLesson);
-        System.out.println("Wybierz ucznia do wystawienia oceny:");
-        for (int i = 0; i < students.size(); i++) {
-            System.out.println((i + 1) + ". " + students.get(i).getFullName());
+        System.out.println("Podaj wartość oceny (od 1 do 6)");
+        double gradeValue = menuManager.getScanner().nextDouble();
+        if (gradeValue < 1 || gradeValue > 6) {
+            pauseAndReturn();
+            return;
         }
+        System.out.println("Podaj komentarz oceny (może być pusty)");
+        String comment = menuManager.getScanner().nextLine();
 
-        int studentIndex = -1;
-        while (studentIndex < 0 || studentIndex >= students.size()) {
-            System.out.print("Podaj numer ucznia: ");
-            try {
-                studentIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-            } catch (NumberFormatException e) {
-                studentIndex = -1;
-            }
-            if (studentIndex < 0 || studentIndex >= students.size()) {
-                System.out.println("Nieprawidłowy numer ucznia.");
-            }
+        Ocena newGrade;
+        if (comment.isEmpty()) {
+             newGrade = new Ocena(gradeValue, lesson, student);
+        } else {
+            newGrade = new Ocena(gradeValue, lesson, student, comment);
         }
-
-        Uczen chosenStudent = students.get(studentIndex);
-
-        
-        double gradeValue;
-        while (true) {
-            System.out.print("Podaj ocenę (1-6): ");
-            try {
-                String line = menuManager.getScanner().nextLine().trim();
-                gradeValue = Double.parseDouble(line);
-                if (gradeValue < 1 || gradeValue > 6) {
-                    System.out.println("Ocena musi być między 1 a 6.");
-                    continue;
-                }
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Nieprawidłowy format liczby.");
-            }
-        }
-
-        
-        System.out.print("Podaj komentarz: ");
-        String gradeComment = menuManager.getScanner().nextLine().trim();
-        if (gradeComment.isEmpty()) {
-            gradeComment = "Brak komentarza.";
-        }
-
-        Ocena newGrade = new Ocena(gradeValue, lastTeacherLesson, chosenStudent, gradeComment);
         dziennik.pushGrade(newGrade);
+        System.out.println("\nDodano ocenę: " + student.getFullName() +
+                " - " + gradeValue + " (" + comment + ")");
+        pauseAndReturn();
+    }
 
-        System.out.println("\nDodano ocenę: " + chosenStudent.getFullName() +
-                " - " + gradeValue + " (" + gradeComment + ")");
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+    private Lekcja findLastTeacherLesson() {
+        List<Lekcja> lessons = dziennik.getLessons();
+        List<Lekcja> teacherLessons = lessons.stream()
+                .filter(x -> x.getTeacher().equals(DziennikLekcyjny.getLoggedAs()))
+                .toList();
+        Lekcja latestLesson = teacherLessons.getFirst();
+
+        for (Lekcja lesson: teacherLessons) {
+            if (latestLesson.getDate().isBefore(lesson.getDate())) {
+                latestLesson = lesson;
+            }
+        }
+        return latestLesson;
     }
 
     private void displayGrades() {
