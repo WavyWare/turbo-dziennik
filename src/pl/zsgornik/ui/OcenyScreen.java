@@ -1,6 +1,7 @@
 package pl.zsgornik.ui;
 
 import java.util.List;
+
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
 
@@ -16,6 +17,9 @@ public class OcenyScreen extends Screen {
         System.out.println("\n=== OCENY ===");
         System.out.println("\n1. Lista ocen");
         System.out.println("2. Dodaj ocenę");
+        System.out.println("3. Usuń ocenę");
+        System.out.println("4. Zmień wartość");
+        System.out.println("5. Zmień komentarz");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -29,15 +33,77 @@ public class OcenyScreen extends Screen {
             case "2":
                 addGrade();
                 break;
+            case "3":
+                Ocena deleteGrade = getGrade();
+                dziennik.getGrades().remove(deleteGrade);
+                break;
+            case "4":
+                Ocena valueGrade = getGrade();
+                System.out.println("Podaj nową wartość oceny:");
+                double value = menuManager.getScanner().nextDouble();
+                if (value < 1 || value > 6) {
+                    pauseAndReturn();
+                    return;
+                }
+                assert valueGrade != null;
+                valueGrade.setValue(value);
+                pauseAndReturn("Pomyślnie dokonano zmian");
+                break;
+            case "5":
+                Ocena commentGrade = getGrade();
+                System.out.println("Podaj nowy komentarz:");
+                String comment = menuManager.getScanner().nextLine();
+                if (comment.isEmpty()) {
+                    pauseAndReturn("Nieprawidłowa wartość");
+                }
+                assert commentGrade != null;
+                commentGrade.setComment(comment);
+                pauseAndReturn("Pomyślnie dokonano zmian");
+                break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
+    }
+
+    public static Ocena getGrade() {
+        List<Ocena> grades = dziennik.getGrades();
+        if (grades.isEmpty()) {
+            System.out.println("Brak ocen w systemie");
+            return null;
+        }
+
+        System.out.println("\n=== WYBIERZ OCENE ===");
+        for (int i = 0; i < grades.size(); i++) {
+            Ocena grade = grades.get(i);
+            System.out.println((i + 1) + ". " + grade);
+        }
+        System.out.println("0. Anuluj");
+        System.out.print("Wybierz numer: ");
+
+        String input = menuManager.getScanner().nextLine();
+        int choice;
+
+        try {
+            choice = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy numer");
+            return null;
+        }
+
+        if (choice == 0) {
+            return null;
+        }
+
+        if (choice < 1 || choice > grades.size()) {
+            System.out.println("Numer poza zakresem");
+            return null;
+        }
+
+        return grades.get(choice - 1);
     }
 
     private void addGrade() {
@@ -104,8 +170,7 @@ public class OcenyScreen extends Screen {
                     " - " + grade.getValue() + " (" + grade.getComment() + ")");
             }
         }
-        System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 }
 

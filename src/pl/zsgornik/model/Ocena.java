@@ -52,4 +52,18 @@ public class Ocena {
         return lesson;
     }
 
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    @Override()
+    public String toString() {
+        return "Ocena: " + value + ", Komentarz: " + comment + ", Ucznia: " + student + " z lekcji " + lesson;
+    }
+
 }
