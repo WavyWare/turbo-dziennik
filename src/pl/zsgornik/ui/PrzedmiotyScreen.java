@@ -5,6 +5,8 @@ import pl.zsgornik.model.*;
 import pl.zsgornik.enums.TypPrzedmiotu;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class PrzedmiotyScreen extends Screen {
     public PrzedmiotyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -40,9 +42,7 @@ public class PrzedmiotyScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -74,17 +74,13 @@ public class PrzedmiotyScreen extends Screen {
                 Przedmiot nowyPrzedmiot = new Przedmiot(wybranyTyp);
                 dziennik.pushSubject(nowyPrzedmiot);
 
-                System.out.println("\nDodano przedmiot: " + wybranyTyp.getName());
-                System.out.println("Naciśnij Enter, aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("\nDodano przedmiot: " + wybranyTyp.getName());
     }
 
     private void removeSubject() {
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            System.out.println("\nBrak przedmiotów do usunięcia.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("\nBrak przedmiotów do usunięcia.");
             return;
         }
 
@@ -106,16 +102,13 @@ public class PrzedmiotyScreen extends Screen {
             System.out.println("Nieprawidłowy format liczby.");
         }
 
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     private void editSubject() {
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            System.out.println("\nBrak przedmiotów do modyfikacji.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("\nBrak przedmiotów do modyfikacji.");
             return;
         }
 
@@ -129,16 +122,12 @@ public class PrzedmiotyScreen extends Screen {
         try {
             idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy format liczby.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy format liczby.");
             return;
         }
 
         if (idx < 0 || idx >= subjects.size()) {
-            System.out.println("Nieprawidłowy numer przedmiotu.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy numer przedmiotu.");
             return;
         }
 
@@ -166,9 +155,7 @@ public class PrzedmiotyScreen extends Screen {
         }
 
         subject.setType(types[selectedTypeIdx]);
-        System.out.println("\nZmieniono typ przedmiotu na: " + subject.getType().getName());
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn("\nZmieniono typ przedmiotu na: " + subject.getType().getName());
     }
 
     private void displaySubjects() {
@@ -193,8 +180,7 @@ public class PrzedmiotyScreen extends Screen {
                 System.out.println();
             }
         }
-        System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 }
 

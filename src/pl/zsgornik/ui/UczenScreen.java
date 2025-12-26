@@ -4,6 +4,8 @@ import java.util.List;
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class UczenScreen extends Screen {
     public UczenScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -39,9 +41,7 @@ public class UczenScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -64,17 +64,14 @@ public class UczenScreen extends Screen {
                 }
             }
         }
-        System.out.println("\nNaciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     private void addStudent() {
         List<Klasa> classes = dziennik.getGroups();
         System.out.println("\n=== DODAWANIE UCZNIA ===");
         if (classes.isEmpty()) {
-            System.out.println("Brak klas w systemie. Najpierw dodaj klasę.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Brak klas w systemie. Najpierw dodaj klasę.");
             return;
         }
 
@@ -88,16 +85,12 @@ public class UczenScreen extends Screen {
         try {
             classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy format liczby.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy format liczby.");
             return;
         }
 
         if (classIndex < 0 || classIndex >= classes.size()) {
-            System.out.println("Nieprawidłowy numer klasy.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy numer klasy.");
             return;
         }
 
@@ -105,26 +98,20 @@ public class UczenScreen extends Screen {
         System.out.print("Podaj imię i nazwisko ucznia: ");
         String fullName = menuManager.getScanner().nextLine().trim();
         if (fullName.isEmpty()) {
-            System.out.println("Imię i nazwisko nie może być puste.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Imię i nazwisko nie może być puste.");
             return;
         }
 
         Uczen newStudent = new Uczen(fullName);
         chosenClass.addStudent(newStudent);
 
-        System.out.println("\nDodano ucznia " + fullName + " do klasy " + chosenClass.getClassName());
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn("\nDodano ucznia " + fullName + " do klasy " + chosenClass.getClassName());
     }
 
     private Uczen chooseStudentWithClass() {
         List<Klasa> classes = dziennik.getGroups();
         if (classes.isEmpty()) {
-            System.out.println("Brak klas w systemie.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Brak klas w systemie.");
             return null;
         }
 
@@ -138,25 +125,19 @@ public class UczenScreen extends Screen {
         try {
             classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy format liczby.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy format liczby.");
             return null;
         }
 
         if (classIndex < 0 || classIndex >= classes.size()) {
-            System.out.println("Nieprawidłowy numer klasy.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy numer klasy.");
             return null;
         }
 
         Klasa chosenClass = classes.get(classIndex);
         List<Uczen> students = chosenClass.getStudents();
         if (students.isEmpty()) {
-            System.out.println("Brak uczniów w wybranej klasie.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Brak uczniów w wybranej klasie.");
             return null;
         }
 
@@ -170,16 +151,12 @@ public class UczenScreen extends Screen {
         try {
             studentIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
         } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy format liczby.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy format liczby.");
             return null;
         }
 
         if (studentIndex < 0 || studentIndex >= students.size()) {
-            System.out.println("Nieprawidłowy numer ucznia.");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy numer ucznia.");
             return null;
         }
 
@@ -199,14 +176,12 @@ public class UczenScreen extends Screen {
         } else {
             System.out.printf("Frekwencja ucznia %s: %.2f%%%n", student.getFullName(), percent);
         }
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     private void reportGrades() {
         dziennik.printStudentReport(chooseStudentWithClass());
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 }
 

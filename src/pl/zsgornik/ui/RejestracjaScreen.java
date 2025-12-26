@@ -3,6 +3,8 @@ package pl.zsgornik.ui;
 import pl.zsgornik.model.Nauczyciel;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class RejestracjaScreen extends Screen {
     public RejestracjaScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -47,8 +49,7 @@ public class RejestracjaScreen extends Screen {
         }
         Nauczyciel teacher = new Nauczyciel(fullName, username, password);
         dziennik.pushTeacher(teacher);
-        System.out.println("Naciśnij Enter aby wrócić do menu głównego...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     @Override

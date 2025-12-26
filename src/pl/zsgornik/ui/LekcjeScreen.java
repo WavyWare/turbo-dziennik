@@ -7,6 +7,8 @@ import pl.zsgornik.enums.StatusObecnosci;
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class LekcjeScreen extends Screen {
     public LekcjeScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -44,16 +46,13 @@ public class LekcjeScreen extends Screen {
                 }
                 StatusObecnosci newStatus = StatusObecnosci.chooseType();
                 attendance.setStatus(newStatus);
-                System.out.println("\nNaciśnij Enter, aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn();
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -61,9 +60,7 @@ public class LekcjeScreen extends Screen {
     private void registerClassAttendance() {
         Lekcja lesson = LekcjeScreen.selectLesson();
         if (lesson == null) {
-            System.out.println("\nNieprawidłowa opcja");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowa opcja");
             return;
         }
         Klasa group = lesson.getGroup();
@@ -73,16 +70,13 @@ public class LekcjeScreen extends Screen {
             System.out.printf("\nTyp obecności dla %s", u);
             StatusObecnosci type = StatusObecnosci.chooseType();
             if (type == null) {
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
             }
             lesson.registerAttendance(u, type);
         }
         System.out.println("\nDodano obecności!");
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     public static Lekcja selectLesson() {
@@ -177,8 +171,7 @@ public class LekcjeScreen extends Screen {
                 System.out.println((i + 1) + ". " + lessons.get(i));
             }
         }
-        System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     private void addLesson() {
@@ -186,9 +179,7 @@ public class LekcjeScreen extends Screen {
         
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            System.out.println("Brak przedmiotów w systemie");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Brak przedmiotów");
             return;
         }
 
@@ -201,9 +192,7 @@ public class LekcjeScreen extends Screen {
         try {
             int subjectIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (subjectIndex < 0 || subjectIndex >= subjects.size()) {
-            System.out.println("Nieprawidłowy numer przedmiotu");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowy numer przedmioty");
                 return;
             }
 
@@ -212,9 +201,7 @@ public class LekcjeScreen extends Screen {
 
             List<Klasa> classes = dziennik.getGroups();
             if (classes.isEmpty()) {
-                System.out.println("Brak klas w systemie");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Brak klas w systemie");
                 return;
             }
 
@@ -226,9 +213,7 @@ public class LekcjeScreen extends Screen {
             
             int classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
             if (classIndex < 0 || classIndex >= classes.size()) {
-                System.out.println("Nieprawidłowy numer klasy");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowy numer klasy");
                 return;
             }
 
@@ -237,12 +222,9 @@ public class LekcjeScreen extends Screen {
             dziennik.addLesson(lesson);
             
             System.out.println("\nDodano lekcję: " + lesson);
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
         } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy format liczby");
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy format liczby");
         }
     }
 }

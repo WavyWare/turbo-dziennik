@@ -5,6 +5,8 @@ import pl.zsgornik.model.*;
 import pl.zsgornik.enums.StatusObecnosci;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class ObecnosciScreen extends Screen {
     public ObecnosciScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -32,9 +34,7 @@ public class ObecnosciScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                System.out.println("\nNieprawidłowa opcja");
-                System.out.println("Naciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -44,8 +44,7 @@ public class ObecnosciScreen extends Screen {
 
         Lekcja lesson = LekcjeScreen.selectLesson();
         if (lesson == null) {
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             return;
         }
 
@@ -60,8 +59,7 @@ public class ObecnosciScreen extends Screen {
             }
         }
 
-        System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 
     private void registerAttendance () {
@@ -69,22 +67,19 @@ public class ObecnosciScreen extends Screen {
 
         Lekcja lesson = LekcjeScreen.selectLesson();
         if (lesson == null) {
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             return;
         }
 
         Uczen student = KlasyScreen.chooseStudent(lesson.getGroup());
         if (student == null) {
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             return;
         }
 
         StatusObecnosci status = StatusObecnosci.chooseType();
         if (status == null) {
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             return;
         }
 
@@ -95,8 +90,7 @@ public class ObecnosciScreen extends Screen {
             System.out.println("\nBłąd: " + e.getMessage());
         }
 
-        System.out.println("Naciśnij Enter aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        pauseAndReturn();
     }
 }
 

@@ -2,6 +2,8 @@ package pl.zsgornik.ui;
 
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.util.Util.pauseAndReturn;
+
 public class LoginScreen extends Screen {
     public LoginScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -26,13 +28,10 @@ public class LoginScreen extends Screen {
         
         if (success) {
             System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().fullName());
-            System.out.println("Naciśnij Enter aby kontynuować...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn();
             menuManager.replaceScreen(new MainMenuScreen(menuManager, dziennik));
         } else {
-            System.out.println("\nNieprawidłowa nazwa użytkownika lub hasło.");
-            System.out.println("Naciśnij Enter aby spróbować ponownie...");
-            menuManager.getScanner().nextLine();
+            pauseAndReturn("Nieprawidłowy login lub hasło");
         }
     }
 }
