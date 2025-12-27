@@ -1,1 +1,70 @@
 # Turbo dziennik
+Aplikacja do zarządzania dziennikiem szkolnym dla nauczycieli
+
+## Podstawowe funkcje
+1. Tworzenie, usuwanie i modyfikacja:
+   1. Klasami
+   2. Lekcjami
+   3. Obecnościami
+   4. Ocenami
+   5. Przedmiotami
+   6. Uczniami
+2. Raporty
+   1. Raport nieobecności
+   2. Raport średnich
+   3. Raport zachowania
+
+## Ekrany
+
+- Ekran startowy
+  - Ekran, który daje opcje rejestracji lub zalogowania się
+- Ekran Logowania
+  - Ekran, który przyjmuje login i hasło a nastepnie porównuje z tymi zapisanymi i loguje do systemu
+- Ekran Rejestracji
+  - Ekran, który pozwala na utworzenie nowego konta nauczyciela i zalogowanie się nim
+- Główny ekran
+  - Centrum zarządzania, dostepny tylko po zalogowaniu. Z jego poziomu można wybierać inne ekrany.
+- Ekran lekcji
+  - Pozwala on:
+    - Wypisać wszystkie lekcje w systemie
+    - Dodać nową lekcję (wybór przedmiotu i klasy)
+    - Zarejestrować obecności dla całej klasy na wybranej lekcji
+    - Zmienić status obecności dla wybranego ucznia
+- Ekran ocen
+  - Pozwala on:
+    - Wyświetlić listę wszystkich ocen w systemie
+    - Dodać nową ocenę (dla ostatniej lekcji prowadzonej przez nauczyciela)
+    - Usunąć ocenę
+    - Zmienić wartość oceny
+    - Zmienić komentarz do oceny
+- Ekran obecności
+  - Pozwala on:
+    - Wyświetlić obecności dla wybranej lekcji
+    - Zarejestrować obecność pojedynczego ucznia na lekcji
+    - Automatycznie dodaje uwagę o nieusprawiedliwionych nieobecnościach (gdy uczeń ma 3 lub więcej)
+- Ekran klas
+  - Pozwala on:
+    - Wyświetlić listę wszystkich klas z informacjami o wychowawcy i liczbie uczniów
+    - Dodać nową klasę
+    - Zmienić nazwę klasy
+    - Ustawić przewodniczącego klasy
+    - Ustawić wychowawcę klasy
+- Ekran przedmiotów
+  - Pozwala on:
+    - Wyświetlić listę wszystkich przedmiotów z przypisanymi nauczycielami
+    - Dodać nowy przedmiot (wybór typu przedmiotu)
+    - Usunąć przedmiot
+    - Zmienić typ przedmiotu
+    - Dodać siebie do przedmiotu (przypisać się jako nauczyciel)
+    - Usunąć siebie z przedmiotu
+- Ekran uczniów
+  - Pozwala on:
+    - Wyświetlić listę wszystkich uczniów według klas
+    - Dodać ucznia do klasy
+    - Usunąć ucznia z klasy
+    - Wyświetlić raport frekwencji ucznia
+    - Wyświetlić raport średnich ocen ucznia (z podziałem na przedmioty)
+    - Wyświetlić uwagi ucznia
+    - Dodać uwagę dla ucznia (pozytywną lub negatywną)
+    - Edytować opis uwagi
+    - Wyświetlić raport zachowania (liczba pochwał i uwag)
