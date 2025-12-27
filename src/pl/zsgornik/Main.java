@@ -1,7 +1,6 @@
 package pl.zsgornik;
 
 import java.util.ArrayList;
-import java.util.List;
 import pl.zsgornik.model.*;
 import pl.zsgornik.enums.TypPrzedmiotu;
 import pl.zsgornik.service.DziennikLekcyjny;
@@ -12,13 +11,29 @@ public class Main {
     private static final String[] FIRST_NAMES = {
         "Jan", "Anna", "Piotr", "Maria", "Krzysztof", "Katarzyna", "Tomasz", "Agnieszka",
         "Marek", "Magdalena", "Paweł", "Ewa", "Michał", "Joanna", "Adam", "Monika",
-        "Łukasz", "Natalia", "Jakub", "Karolina", "Bartosz", "Aleksandra", "Marcin", "Weronika"
+        "Łukasz", "Natalia", "Jakub", "Karolina", "Bartosz", "Aleksandra", "Marcin", "Weronika",
+        "Kamil", "Patrycja", "Dawid", "Sylwia", "Rafał", "Dominika", "Mateusz", "Paulina",
+        "Kacper", "Martyna", "Filip", "Julia", "Szymon", "Wiktoria", "Maciej", "Zuzanna",
+        "Adrian", "Oliwia", "Daniel", "Amelia", "Hubert", "Maja", "Sebastian", "Hanna",
+        "Mikołaj", "Emilia", "Wiktor", "Nina", "Oskar", "Lena", "Antoni", "Zofia",
+        "Tymon", "Laura", "Igor", "Marcelina", "Alan", "Klara", "Fabian", "Milena"
     };
     
     private static final String[] LAST_NAMES = {
         "Kowalski", "Nowak", "Wiśniewski", "Wójcik", "Kowalczyk", "Kamiński", "Lewandowski", "Zieliński",
         "Szymański", "Woźniak", "Kozłowski", "Jankowski", "Wojciechowski", "Kwiatkowski", "Krawczyk", "Kaczmarek",
-        "Piotrowski", "Grabowski", "Nowakowski", "Pawłowski", "Michalski", "Nowicki", "Adamczyk", "Dudek"
+        "Piotrowski", "Grabowski", "Nowakowski", "Pawłowski", "Michalski", "Nowicki", "Adamczyk", "Dudek",
+        "Zając", "Wieczorek", "Jabłoński", "Majewski", "Olszewski", "Jaworski", "Wróbel", "Malinowski",
+        "Pawlak", "Witkowski", "Walczak", "Stepień", "Górski", "Rutkowski", "Michalak", "Sikora",
+        "Ostrowski", "Baran", "Duda", "Szewczyk", "Tomaszewski", "Pietrzak", "Marciniak", "Wróblewski",
+        "Zalewski", "Jakubowski", "Jasiński", "Zawadzki", "Sadowski", "Bąk", "Wilk", "Sokołowski",
+        "Lis", "Kubiak", "Król", "Kania", "Mazur", "Brzeziński", "Pająk", "Szymczak"
+    };
+    
+    private static final String[] CLASS_NAMES = {
+        "1A", "1B", "1C", "2A", "2B", "2C", "3A", "3B", "3C",
+        "4A", "4B", "4C", "5A", "5B", "5C", "6A", "6B", "6C",
+        "7A", "7B"
     };
 
     public static void main(String[] args) {
@@ -27,7 +42,6 @@ public class Main {
         ArrayList<Przedmiot> subjects = new ArrayList<>();
         ArrayList<Ocena> grades = new ArrayList<>();
 
-        // Generowanie 20 nauczycieli
         for (int i = 0; i < 20; i++) {
             String firstName = FIRST_NAMES[i % FIRST_NAMES.length];
             String lastName = LAST_NAMES[i % LAST_NAMES.length];
@@ -36,28 +50,21 @@ public class Main {
             teachers.add(new Nauczyciel(fullName, username, "Haslo123"));
         }
 
-        // Generowanie 20 przedmiotów (8 typów, więc niektóre się powtarzają)
         TypPrzedmiotu[] subjectTypes = TypPrzedmiotu.values();
         for (int i = 0; i < 20; i++) {
             Przedmiot subject = new Przedmiot(subjectTypes[i % subjectTypes.length]);
-            // Przypisanie nauczyciela do przedmiotu (cyklicznie)
             subject.addTeacher(teachers.get(i % teachers.size()));
             subjects.add(subject);
         }
 
-        // Generowanie 20 klas, każda z co najmniej 10 uczniami
         int studentCounter = 0;
-        for (int classNum = 1; classNum <= 20; classNum++) {
-            String className = (classNum <= 3 ? "1" : classNum <= 6 ? "2" : classNum <= 9 ? "3" : 
-                              classNum <= 12 ? "4" : classNum <= 15 ? "5" : classNum <= 18 ? "6" : "7") + 
-                              (char)('A' + ((classNum - 1) % 3));
+        for (int classNum = 0; classNum < CLASS_NAMES.length; classNum++) {
+            String className = CLASS_NAMES[classNum];
             
-            // Przypisanie wychowawcy (cyklicznie z nauczycieli)
-            Nauczyciel supervisor = teachers.get((classNum - 1) % teachers.size());
+            Nauczyciel supervisor = teachers.get(classNum % teachers.size());
             Klasa klasa = new Klasa(className, supervisor);
             
-            // Dodanie co najmniej 10 uczniów do każdej klasy
-            int studentsInClass = 10 + (classNum % 3); // 10-12 uczniów na klasę
+            int studentsInClass = 10 + (classNum % 3);
             for (int j = 0; j < studentsInClass; j++) {
                 String studentFirstName = FIRST_NAMES[studentCounter % FIRST_NAMES.length];
                 String studentLastName = LAST_NAMES[(studentCounter + 5) % LAST_NAMES.length];
