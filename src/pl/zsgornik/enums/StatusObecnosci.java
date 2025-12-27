@@ -6,7 +6,8 @@ public enum StatusObecnosci {
     OBECNY("Obecny", true),
     SPOZNIONY("Spóźniony", true),
     ZWOLNIONY("Zwolniony", null),
-    NIEOBECNY("Nieobecny", false);
+    NIEOBECNY("Nieobecny", false),
+    USPRAWIEDLIWIONY("Usprawiedliwiony", false);
 
     private final String fullName;
     private final Boolean wasPresent;

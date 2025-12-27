@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import pl.zsgornik.model.*;
 import pl.zsgornik.enums.StatusObecnosci;
@@ -90,7 +91,40 @@ public class ObecnosciScreen extends Screen {
             System.out.println("\nBłąd: " + e.getMessage());
         }
 
+        punishStudentForUnexcusedHours(dziennik, student);
         pauseAndReturn();
+    }
+
+    public static void punishStudentForUnexcusedHours(DziennikLekcyjny dziennik, Uczen student) {
+        Klasa group = dziennik.getGroups().stream()
+                .filter(x -> x.getStudents().contains(student))
+                .findFirst()
+                .orElseThrow();
+
+        List<Lekcja> lessonsOfGroup = dziennik.getLessons().stream()
+                .filter(x -> x.getGroup().equals(group))
+                .toList();
+
+        List<Obecnosc> attendances = new ArrayList<>();
+
+        for (Lekcja l: lessonsOfGroup) {
+            for (Obecnosc o: l.getAttendances()) {
+                if (o.getStudent().equals(student)) {
+                    attendances.add(o);
+                }
+            }
+        }
+
+        int unexcusedHoursCounter = 0;
+        for (Obecnosc o: attendances) {
+            if (o.getStatus()==StatusObecnosci.NIEOBECNY) {
+                unexcusedHoursCounter++;
+            }
+        }
+
+        if (unexcusedHoursCounter >= 3) {
+            student.pushNote(new Uwaga(false, "Nieusprawiedliwione nieobecności: " + unexcusedHoursCounter));
+        }
     }
 }
 

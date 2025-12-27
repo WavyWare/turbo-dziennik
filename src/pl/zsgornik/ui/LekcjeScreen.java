@@ -46,6 +46,7 @@ public class LekcjeScreen extends Screen {
                 }
                 StatusObecnosci newStatus = StatusObecnosci.chooseType();
                 attendance.setStatus(newStatus);
+                ObecnosciScreen.punishStudentForUnexcusedHours(dziennik, attendance.getStudent());
                 pauseAndReturn();
                 break;
             case "0":
