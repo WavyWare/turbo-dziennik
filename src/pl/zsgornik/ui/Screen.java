@@ -1,14 +1,17 @@
 package pl.zsgornik.ui;
 
 import pl.zsgornik.service.DziennikLekcyjny;
+import pl.zsgornik.util.SelectionHelper;
 
 public abstract class Screen {
-    protected static MenuManager menuManager;
-    protected static DziennikLekcyjny dziennik;
+    protected final MenuManager menuManager;
+    protected final DziennikLekcyjny dziennik;
+    protected final SelectionHelper selectionHelper;
 
     public Screen(MenuManager menuManager, DziennikLekcyjny dziennik) {
-        Screen.menuManager = menuManager;
-        Screen.dziennik = dziennik;
+        this.menuManager = menuManager;
+        this.dziennik = dziennik;
+        this.selectionHelper = new SelectionHelper(dziennik, menuManager.getScanner());
     }
 
     public abstract void display();
