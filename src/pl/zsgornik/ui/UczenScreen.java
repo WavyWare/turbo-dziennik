@@ -18,6 +18,9 @@ public class UczenScreen extends Screen {
         System.out.println("2. Dodaj ucznia do klasy");
         System.out.println("3. Raport frekwencji ucznia");
         System.out.println("4. Raport średnich ocen ucznia");
+        System.out.println("5. Wyświetl uwagi ucznia");
+        System.out.println("6. Dodaj uwagę dla ucznia");
+        System.out.println("7. Wyświetl raport zachowania");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -37,6 +40,15 @@ public class UczenScreen extends Screen {
             case "4":
                 reportGrades();
                 break;
+            case "5":
+                displayNotes();
+                break;
+            case "6":
+                addNote();
+                break;
+            case "7":
+                reportBehavior();
+                break;
             case "0":
                 menuManager.popScreen();
                 break;
@@ -44,6 +56,52 @@ public class UczenScreen extends Screen {
                 pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
+    }
+
+    private void reportBehavior() {
+        Uczen student = chooseStudentWithClass();
+        assert student != null;
+        int negatives = 0;
+        int positives = 0;
+        for (Uwaga u: student.getBehaviouralNotes()) {
+            if (u.isPositive()) {
+                positives++;
+            } else {
+                negatives++;
+            }
+        }
+        System.out.println("\nRaport zachowania:");
+        System.out.printf("Pochwał: %d\n", positives);
+        System.out.printf("Uwag: %d\n", negatives);
+        System.out.println("\nRóżnica: " + (positives-negatives));
+        pauseAndReturn();
+    }
+
+    private void addNote() {
+        Uczen student = chooseStudentWithClass();
+        assert student != null;
+        System.out.println("\nPodaj treść uwagi:");
+        String description = menuManager.getScanner().nextLine();
+        if (description.isEmpty()) {
+            pauseAndReturn("Opis nie może być pusty");
+            return;
+        }
+        System.out.println("Czy uwaga jest negatywna (domyślnie: tak): tak/nie");
+        boolean isPositive = menuManager.getScanner().nextLine().equalsIgnoreCase("nie");
+        Uwaga newNote = new Uwaga(isPositive, description);
+        student.pushNote(newNote);
+        pauseAndReturn();
+    }
+
+    private void displayNotes() {
+        Uczen student = chooseStudentWithClass();
+        System.out.println("\nUwagi dla ucznia: "+student);
+        assert student != null;
+        List<Uwaga> behaviouralNotes = student.getBehaviouralNotes();
+        for (int i = 0; i < behaviouralNotes.size(); i++) {
+            System.out.println((i + 1)+ ". " + behaviouralNotes.get(i));
+        }
+        pauseAndReturn();
     }
 
     private void listStudents() {
