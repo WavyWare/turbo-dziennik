@@ -1,6 +1,9 @@
 package pl.zsgornik.ui;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Objects;
+
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
 
@@ -20,7 +23,8 @@ public class UczenScreen extends Screen {
         System.out.println("4. Raport średnich ocen ucznia");
         System.out.println("5. Wyświetl uwagi ucznia");
         System.out.println("6. Dodaj uwagę dla ucznia");
-        System.out.println("7. Wyświetl raport zachowania");
+        System.out.println("7. Edytuj opis uwagi dla ucznia");
+        System.out.println("8. Wyświetl raport zachowania");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -47,6 +51,9 @@ public class UczenScreen extends Screen {
                 addNote();
                 break;
             case "7":
+                editNote();
+                break;
+            case "8":
                 reportBehavior();
                 break;
             case "0":
@@ -56,6 +63,57 @@ public class UczenScreen extends Screen {
                 pauseAndReturn("Nieprawidłowa opcja");
                 break;
         }
+    }
+
+    private void editNote() {
+        Uwaga note = chooseNote();
+        System.out.printf("Stary opis: %s", note.getDescription());
+        System.out.println("\nPodaj nowy opis uwagi:");
+        String newDescription = menuManager.getScanner().nextLine();
+        if (newDescription.isEmpty()){
+            pauseAndReturn("Opis nie może być pusty");
+            return;
+        }
+        note.setDescription(newDescription);
+        pauseAndReturn("Zastosowano zmiany");
+    }
+
+    public Uwaga chooseNote() {
+        List<Uwaga> notes = Objects.requireNonNull(chooseStudentWithClass()).getBehaviouralNotes();
+
+        if (notes == null || notes.isEmpty()) {
+            pauseAndReturn("Uczeń nie ma uwag. Nic do zrobienia.");
+            return null;
+        }
+
+        System.out.println("\n=== WYBIERZ UWAGĘ ===");
+        for (int i = 0; i < notes.size(); i++) {
+            Uwaga note = notes.get(i);
+            System.out.println((i + 1) + ". " + note);
+        }
+        System.out.println("0. Anuluj");
+        System.out.print("Wybierz numer: ");
+
+        String input = menuManager.getScanner().nextLine();
+        int choice;
+
+        try {
+            choice = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Nieprawidłowy numer");
+            return null;
+        }
+
+        if (choice == 0) {
+            return null;
+        }
+
+        if (choice < 1 || choice > notes.size()) {
+            System.out.println("Numer poza zakresem");
+            return null;
+        }
+
+        return notes.get(choice - 1);
     }
 
     private void reportBehavior() {

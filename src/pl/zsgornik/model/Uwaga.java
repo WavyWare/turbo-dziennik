@@ -4,11 +4,6 @@ public class Uwaga {
     private final boolean isPositive;
     private String description;
 
-    public Uwaga(String description) {
-        this.description = description;
-        this.isPositive = false;
-    }
-
     public Uwaga(boolean isPositive, String description) {
         this.isPositive = isPositive;
         this.description = description;
