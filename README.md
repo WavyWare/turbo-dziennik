@@ -1,6 +1,34 @@
 # Turbo dziennik
 Aplikacja do zarządzania dziennikiem szkolnym dla nauczycieli
 
+## Wymagania
+- Java 21 lub nowsza
+- System operacyjny: Windows, Linux, macos
+
+## Instalacja
+1. Pobierz repo z github
+```cmd
+git clone https://github.com/WavyWare/turbo-dziennik.git 
+```
+2. Wejdź do folderu
+```cmd
+cd turbo-dziennik
+```
+3. Skompiluj i uruchom projekt
+
+Dla Windows Powershell:
+```cmd
+javac -d out (Get-ChildItem -Recurse src/pl/zsgornik -Filter *.java).FullName
+java out/Main
+```
+Dla Linux:
+```bash
+javac -d out $(find src/pl/zsgornik -name "*.java")
+java out/Main
+```
+Dla wszystkich systemów:
+Wejdź w intellij i uruchom plik Main.java w folderze `src/pl/zsgornik`
+
 ## Podstawowe funkcje
 1. Tworzenie, usuwanie i modyfikacja:
    1. Klasami
@@ -13,6 +41,11 @@ Aplikacja do zarządzania dziennikiem szkolnym dla nauczycieli
    1. Raport nieobecności
    2. Raport średnich
    3. Raport zachowania
+
+## Użytkowanie
+1. Po uruchomieniu zaloguj się bądź zarejestruj.
+   1. Przykładowy użytkownik, który jest w systemie to Jan Kowalski z loginem `jkowalski123` i hasłem `haslo123`
+2. Jeżeli logowanie przeszło pomyślnie, wybierz dane, które chcesz zmieniać. Przyjazny interfejs ułatwia kontrole.
 
 ## Ekrany
 

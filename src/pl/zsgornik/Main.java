@@ -42,6 +42,8 @@ public class Main {
         ArrayList<Przedmiot> subjects = new ArrayList<>();
         ArrayList<Ocena> grades = new ArrayList<>();
 
+        teachers.add(new Nauczyciel("Jan Kowalski", "jkowalski123", "haslo123"));
+
         for (int i = 0; i < 20; i++) {
             String firstName = FIRST_NAMES[i % FIRST_NAMES.length];
             String lastName = LAST_NAMES[i % LAST_NAMES.length];
@@ -49,6 +51,7 @@ public class Main {
             String username = (firstName.charAt(0) + lastName).toLowerCase() + (i > 0 ? i : "");
             teachers.add(new Nauczyciel(fullName, username, "Haslo123"));
         }
+
 
         TypPrzedmiotu[] subjectTypes = TypPrzedmiotu.values();
         for (int i = 0; i < 20; i++) {
