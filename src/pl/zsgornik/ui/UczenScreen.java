@@ -15,7 +15,7 @@ public class UczenScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== UCZNIOWIE ===");
+        System.out.println("\nturbo dziennik - UCZNIOWIE");
         System.out.println("\n1. Lista uczniów (według klas)");
         System.out.println("2. Dodaj ucznia do klasy");
         System.out.println("3. Usuń ucznia z klasy");
@@ -144,7 +144,7 @@ public class UczenScreen extends Screen {
 
     private void listStudents() {
         List<Klasa> classes = dziennik.getGroups();
-        System.out.println("\n=== LISTA UCZNIÓW ===");
+        System.out.println("\nturbo dziennik - LISTA UCZNIÓW");
         if (classes.isEmpty()) {
             System.out.println("Brak klas w systemie.");
         } else {
@@ -164,7 +164,7 @@ public class UczenScreen extends Screen {
     }
 
     private void addStudent() {
-        System.out.println("\n=== DODAWANIE UCZNIA ===");
+        System.out.println("\nturbo dziennik - DODAWANIE UCZNIA");
         Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
             return;
@@ -183,7 +183,7 @@ public class UczenScreen extends Screen {
     }
 
     private void removeStudent() {
-        System.out.println("\n=== USUWANIE UCZNIA Z KLASY ===");
+        System.out.println("\nturbo dziennik - USUWANIE UCZNIA Z KLASY");
         Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
             return;
@@ -202,7 +202,7 @@ public class UczenScreen extends Screen {
     }
 
     private void reportPresence() {
-        System.out.println("\n=== RAPORT FREKWENCJI UCZNIA ===");
+        System.out.println("\nturbo dziennik - RAPORT FREKWENCJI UCZNIA");
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
             return;

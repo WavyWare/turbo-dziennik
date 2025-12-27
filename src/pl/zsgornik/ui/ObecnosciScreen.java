@@ -19,7 +19,7 @@ public class ObecnosciScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== OBECNOŚCI ===");
+        System.out.println("\nturbo dziennik - OBECNOŚCI");
         System.out.println("\n1. Wyświetl obecności");
         System.out.println("2. Zarejestruj obecność");
         System.out.println("0. Powrót");
@@ -45,7 +45,7 @@ public class ObecnosciScreen extends Screen {
     }
 
     private void displayAttendance() {
-        System.out.println("\n=== OBECNOŚCI ===");
+        System.out.println("\nturbo dziennik - OBECNOŚCI");
 
         Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
@@ -68,7 +68,7 @@ public class ObecnosciScreen extends Screen {
     }
 
     private void registerAttendance () {
-        System.out.println("\n=== REJESTROWANIE OBECNOŚCI ===");
+        System.out.println("\nturbo dziennik - REJESTROWANIE OBECNOŚCI");
 
         Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {

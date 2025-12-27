@@ -16,7 +16,7 @@ public class PrzedmiotyScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== PRZEDMIOTY ===");
+        System.out.println("\nturbo dziennik - PRZEDMIOTY");
         System.out.println("\n1. Lista przedmiotów");
         System.out.println("2. Dodaj przedmiot");
         System.out.println("3. Usuń przedmiot");
@@ -58,7 +58,7 @@ public class PrzedmiotyScreen extends Screen {
     }
 
     private void addSubject() {
-                System.out.println("\n=== DODAJ PRZEDMIOT ===");
+                System.out.println("\nturbo dziennik - DODAJ PRZEDMIOT");
                 TypPrzedmiotu[] types = TypPrzedmiotu.values();
                 System.out.println("Wybierz typ przedmiotu:");
                 for (int i = 0; i < types.length; i++) {
@@ -94,7 +94,7 @@ public class PrzedmiotyScreen extends Screen {
             return;
         }
 
-        System.out.println("\n=== USUWANIE PRZEDMIOTU ===");
+        System.out.println("\nturbo dziennik - USUWANIE PRZEDMIOTU");
         for (int i = 0; i < subjects.size(); i++) {
             System.out.println((i + 1) + ". " + subjects.get(i));
         }
@@ -122,7 +122,7 @@ public class PrzedmiotyScreen extends Screen {
             return;
         }
 
-        System.out.println("\n=== MODYFIKACJA PRZEDMIOTU ===");
+        System.out.println("\nturbo dziennik - MODYFIKACJA PRZEDMIOTU");
         for (int i = 0; i < subjects.size(); i++) {
             System.out.println((i + 1) + ". " + subjects.get(i));
         }
@@ -169,7 +169,7 @@ public class PrzedmiotyScreen extends Screen {
     }
 
     private void displaySubjects() {
-        System.out.println("\n=== LISTA PRZEDMIOTÓW ===");
+        System.out.println("\nturbo dziennik - LISTA PRZEDMIOTÓW");
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
             System.out.println("Brak przedmiotów w systemie");
@@ -194,7 +194,7 @@ public class PrzedmiotyScreen extends Screen {
     }
 
     private void addTeacherToSubject() {
-        System.out.println("\n=== DODAWANIE SIEBIE DO PRZEDMIOTU ===");
+        System.out.println("\nturbo dziennik - DODAWANIE SIEBIE DO PRZEDMIOTU");
         Nauczyciel loggedTeacher = getLoggedAs();
         System.out.println("Zalogowany jako: " + loggedTeacher.fullName());
         
@@ -225,7 +225,7 @@ public class PrzedmiotyScreen extends Screen {
             return;
         }
 
-        System.out.println("\n=== USUWANIE SIEBIE Z PRZEDMIOTU ===");
+        System.out.println("\nturbo dziennik - USUWANIE SIEBIE Z PRZEDMIOTU");
         System.out.println("Zalogowany jako: " + loggedTeacher.fullName());
         System.out.println("\nTwoje przedmioty:");
         for (int i = 0; i < teacherSubjects.size(); i++) {

@@ -15,7 +15,7 @@ public class OcenyScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== OCENY ===");
+        System.out.println("\nturbo dziennik - OCENY");
         System.out.println("\n1. Lista ocen");
         System.out.println("2. Dodaj ocenę");
         System.out.println("3. Usuń ocenę");
@@ -80,7 +80,7 @@ public class OcenyScreen extends Screen {
 
 
     private void addGrade() {
-        System.out.println("\n=== DODAWANIE OCENY ===");
+        System.out.println("\nturbo dziennik - DODAWANIE OCENY");
 
         Lekcja lesson = findLastTeacherLesson();
         if (lesson == null) {
@@ -137,7 +137,7 @@ public class OcenyScreen extends Screen {
     }
 
     private void displayGrades() {
-        System.out.println("\n=== LISTA OCEN ===");
+        System.out.println("\nturbo dziennik - LISTA OCEN");
         List<Ocena> grades = dziennik.getGrades();
         if (grades.isEmpty()) {
             System.out.println("Brak ocen w systemie");

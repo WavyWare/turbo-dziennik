@@ -12,9 +12,8 @@ public class RejestracjaScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== REJESTRACJA ===");
-        
-        // Pobranie imienia i nazwiska
+        System.out.println("\nturbo dziennik -  REJESTRACJA");
+
         String fullName;
         while (true) {
             System.out.print("Podaj imię i nazwisko nauczyciela: ");
@@ -24,8 +23,7 @@ public class RejestracjaScreen extends Screen {
             }
             System.out.println("Imię i nazwisko nie może być puste. Spróbuj ponownie.");
         }
-        
-        // Pobranie loginu
+
         String username;
         while (true) {
             System.out.print("Podaj login: ");
@@ -42,8 +40,7 @@ public class RejestracjaScreen extends Screen {
             username = inputUsername;
             break;
         }
-        
-        // Pobranie hasła z wieloma próbami
+
         String password;
         while (true) {
             System.out.print("Podaj hasło: ");

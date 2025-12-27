@@ -9,7 +9,7 @@ public class StartScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== TURBO DZIENNIK ===");
+        System.out.println("\nTURBO DZIENNIK");
         System.out.println("1. Zaloguj");
         System.out.println("2. Zarejestruj");
         System.out.println("0. Wyjdź");

@@ -11,7 +11,7 @@ public class LoginScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== LOGOWANIE ===");
+        System.out.println("\nturbo dziennik - LOGOWANIE");
         System.out.print("Nazwa użytkownika: ");
     }
 

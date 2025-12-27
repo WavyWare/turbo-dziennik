@@ -20,7 +20,7 @@ public class LekcjeScreen extends Screen {
 
     @Override
     public void display() {
-        System.out.println("\n=== LEKCJE ===");
+        System.out.println("\nturbo dziennik - LEKCJE");
         System.out.println("\n1. Lista lekcji");
         System.out.println("2. Dodaj lekcję");
         System.out.println("3. Zarejestruj obecności");
@@ -88,7 +88,7 @@ public class LekcjeScreen extends Screen {
     }
 
     private void displayLessons() {
-        System.out.println("\n=== LISTA LEKCJI ===");
+        System.out.println("\nturbo dziennik - LISTA LEKCJI");
         List<Lekcja> lessons = dziennik.getLessons();
         if (lessons.isEmpty()) {
             System.out.println("Brak lekcji w systemie.");
@@ -101,7 +101,7 @@ public class LekcjeScreen extends Screen {
     }
 
     private void addLesson() {
-        System.out.println("\n=== DODAWANIE LEKCJI ===");
+        System.out.println("\nturbo dziennik - DODAWANIE LEKCJI");
         
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {

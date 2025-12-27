@@ -23,7 +23,7 @@ public class SelectionHelper {
             return null;
         }
 
-        System.out.println("\n=== " + title + " ===");
+        System.out.println("\nturbo dziennik - " + title);
         for (int i = 0; i < items.size(); i++) {
             System.out.println((i + 1) + ". " + formatter.apply(items.get(i)));
         }

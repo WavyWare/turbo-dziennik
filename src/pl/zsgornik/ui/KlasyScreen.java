@@ -96,7 +96,7 @@ public class KlasyScreen extends Screen {
     }
 
     private void displayClasses() {
-        System.out.println("\n=== LISTA KLAS ===");
+        System.out.println("\nturbo dziennik - LISTA KLAS");
         List<Klasa> classes = dziennik.getGroups();
         if (classes.isEmpty()) {
             System.out.println("Brak klas w systemie");
