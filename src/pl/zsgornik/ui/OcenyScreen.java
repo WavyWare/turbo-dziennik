@@ -102,7 +102,7 @@ public class OcenyScreen extends Screen {
             return;
         }
         System.out.println("Podaj komentarz oceny (może być pusty)");
-        String comment = menuManager.getScanner().nextLine();
+        String comment = menuManager.getScanner().next();
 
         Ocena newGrade;
         if (comment.isEmpty()) {

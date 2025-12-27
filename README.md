@@ -16,6 +16,10 @@ cd turbo-dziennik
 ```
 3. Skompiluj i uruchom projekt
 
+Dla wszystkich systemów (Zalecane):
+
+Wejdź w intellij i uruchom plik Main.java w folderze `src/pl/zsgornik`
+
 Dla Windows Powershell:
 ```cmd
 javac -d out (Get-ChildItem -Recurse src/pl/zsgornik -Filter *.java).FullName
@@ -26,8 +30,6 @@ Dla Linux:
 javac -d out $(find src/pl/zsgornik -name "*.java")
 java out/Main
 ```
-Dla wszystkich systemów:
-Wejdź w intellij i uruchom plik Main.java w folderze `src/pl/zsgornik`
 
 ## Podstawowe funkcje
 1. Tworzenie, usuwanie i modyfikacja:
@@ -46,6 +48,15 @@ Wejdź w intellij i uruchom plik Main.java w folderze `src/pl/zsgornik`
 1. Po uruchomieniu zaloguj się bądź zarejestruj.
    1. Przykładowy użytkownik, który jest w systemie to Jan Kowalski z loginem `jkowalski123` i hasłem `haslo123`
 2. Jeżeli logowanie przeszło pomyślnie, wybierz dane, które chcesz zmieniać. Przyjazny interfejs ułatwia kontrole.
+
+### Przykład korzystania
+1. Nauczyciel Jan Kowalski loguje się, by sprawdzić obecność na lekcji i przeprowadzić pytanie na lekcji
+2. Nauczyciel loguje się swoim loginem i hasłem
+3. Następnie przechodzi do kategorii "1. Lekcje" by dodać swoją lekcję
+4. Rejestruje on obecności opcją 3. Zarejestruj obecności i wybiera tę lekcję, którą dodał
+5. Po kolei oznacza każdego ucznia i jego typ obecności
+6. Wychodzi opcją 0. Powrót i przechodzi do kategorii 2. Oceny i potem do Dodaj ocenę
+7. Nauczyciel wybiera opcje dowolnego ucznia i wstawia ocene i komentarz
 
 ## Ekrany
 
@@ -101,3 +112,9 @@ Wejdź w intellij i uruchom plik Main.java w folderze `src/pl/zsgornik`
     - Dodać uwagę dla ucznia (pozytywną lub negatywną)
     - Edytować opis uwagi
     - Wyświetlić raport zachowania (liczba pochwał i uwag)
+
+## Bezpieczeństwo
+Zostało użyte hash'owanie haseł, autoryzacja użytkowników i wymagania haseł
+
+## Autor
+Jan Florek, najzdolniejszy uczeń klasy 3bT

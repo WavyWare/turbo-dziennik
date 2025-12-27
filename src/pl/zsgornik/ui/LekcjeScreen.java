@@ -123,7 +123,7 @@ public class LekcjeScreen extends Screen {
             }
 
             Przedmiot subject = subjects.get(subjectIndex);
-            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().getFirst();
+            Nauczyciel teacher = DziennikLekcyjny.getLoggedAs();
 
             Klasa klasa = selectionHelper.selectClass();
             if (klasa == null) {
