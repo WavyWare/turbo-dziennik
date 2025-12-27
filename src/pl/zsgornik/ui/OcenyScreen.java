@@ -153,7 +153,7 @@ public class OcenyScreen extends Screen {
             return null;
         }
         
-        Lekcja latestLesson = teacherLessons.get(0);
+        Lekcja latestLesson = teacherLessons.getFirst();
 
         for (Lekcja lesson: teacherLessons) {
             if (latestLesson.getDate().isBefore(lesson.getDate())) {

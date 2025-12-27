@@ -198,7 +198,7 @@ public class LekcjeScreen extends Screen {
             }
 
             Przedmiot subject = subjects.get(subjectIndex);
-            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().get(0);
+            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().getFirst();
 
             Klasa klasa = KlasyScreen.selectClass();
             if (klasa == null) {
