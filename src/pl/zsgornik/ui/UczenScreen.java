@@ -1,6 +1,5 @@
 package pl.zsgornik.ui;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Objects;
 
@@ -184,33 +183,12 @@ public class UczenScreen extends Screen {
     }
 
     private void addStudent() {
-        List<Klasa> classes = dziennik.getGroups();
         System.out.println("\n=== DODAWANIE UCZNIA ===");
-        if (classes.isEmpty()) {
-            pauseAndReturn("Brak klas w systemie. Najpierw dodaj klasę.");
+        Klasa chosenClass = KlasyScreen.selectClass();
+        if (chosenClass == null) {
             return;
         }
 
-        System.out.println("Dostępne klasy:");
-        for (int i = 0; i < classes.size(); i++) {
-            System.out.println((i + 1) + ". " + classes.get(i).getClassName());
-        }
-        System.out.print("Wybierz klasę: ");
-
-        int classIndex;
-        try {
-            classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-        } catch (NumberFormatException e) {
-            pauseAndReturn("Nieprawidłowy format liczby.");
-            return;
-        }
-
-        if (classIndex < 0 || classIndex >= classes.size()) {
-            pauseAndReturn("Nieprawidłowy numer klasy.");
-            return;
-        }
-
-        Klasa chosenClass = classes.get(classIndex);
         System.out.print("Podaj imię i nazwisko ucznia: ");
         String fullName = menuManager.getScanner().nextLine().trim();
         if (fullName.isEmpty()) {
@@ -225,58 +203,11 @@ public class UczenScreen extends Screen {
     }
 
     private Uczen chooseStudentWithClass() {
-        List<Klasa> classes = dziennik.getGroups();
-        if (classes.isEmpty()) {
-            pauseAndReturn("Brak klas w systemie.");
+        Klasa chosenClass = KlasyScreen.selectClass();
+        if (chosenClass == null) {
             return null;
         }
-
-        System.out.println("Dostępne klasy:");
-        for (int i = 0; i < classes.size(); i++) {
-            System.out.println((i + 1) + ". " + classes.get(i).getClassName());
-        }
-        System.out.print("Wybierz klasę: ");
-
-        int classIndex;
-        try {
-            classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-        } catch (NumberFormatException e) {
-            pauseAndReturn("Nieprawidłowy format liczby.");
-            return null;
-        }
-
-        if (classIndex < 0 || classIndex >= classes.size()) {
-            pauseAndReturn("Nieprawidłowy numer klasy.");
-            return null;
-        }
-
-        Klasa chosenClass = classes.get(classIndex);
-        List<Uczen> students = chosenClass.getStudents();
-        if (students.isEmpty()) {
-            pauseAndReturn("Brak uczniów w wybranej klasie.");
-            return null;
-        }
-
-        System.out.println("\nUczniowie w klasie " + chosenClass.getClassName() + ":");
-        for (int i = 0; i < students.size(); i++) {
-            System.out.println((i + 1) + ". " + students.get(i).getFullName());
-        }
-        System.out.print("Wybierz ucznia: ");
-
-        int studentIndex;
-        try {
-            studentIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-        } catch (NumberFormatException e) {
-            pauseAndReturn("Nieprawidłowy format liczby.");
-            return null;
-        }
-
-        if (studentIndex < 0 || studentIndex >= students.size()) {
-            pauseAndReturn("Nieprawidłowy numer ucznia.");
-            return null;
-        }
-
-        return students.get(studentIndex);
+        return KlasyScreen.chooseStudent(chosenClass);
     }
 
     private void reportPresence() {

@@ -198,27 +198,12 @@ public class LekcjeScreen extends Screen {
             }
 
             Przedmiot subject = subjects.get(subjectIndex);
-            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().getFirst();
+            Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().get(0);
 
-            List<Klasa> classes = dziennik.getGroups();
-            if (classes.isEmpty()) {
-                pauseAndReturn("Brak klas w systemie");
+            Klasa klasa = KlasyScreen.selectClass();
+            if (klasa == null) {
                 return;
             }
-
-            System.out.println("Dostępne klasy:");
-            for (int i = 0; i < classes.size(); i++) {
-                System.out.println((i + 1) + ". " + classes.get(i));
-            }
-            System.out.print("Wybierz klasę: ");
-            
-            int classIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-            if (classIndex < 0 || classIndex >= classes.size()) {
-                pauseAndReturn("Nieprawidłowy numer klasy");
-                return;
-            }
-
-            Klasa klasa = classes.get(classIndex);
             Lekcja lesson = new Lekcja(subject, teacher, klasa, LocalDate.now());
             dziennik.addLesson(lesson);
             

@@ -148,7 +148,12 @@ public class OcenyScreen extends Screen {
         List<Lekcja> teacherLessons = lessons.stream()
                 .filter(x -> x.getTeacher().equals(DziennikLekcyjny.getLoggedAs()))
                 .toList();
-        Lekcja latestLesson = teacherLessons.getFirst();
+        
+        if (teacherLessons.isEmpty()) {
+            return null;
+        }
+        
+        Lekcja latestLesson = teacherLessons.get(0);
 
         for (Lekcja lesson: teacherLessons) {
             if (latestLesson.getDate().isBefore(lesson.getDate())) {
