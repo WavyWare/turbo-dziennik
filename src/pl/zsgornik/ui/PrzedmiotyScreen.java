@@ -1,10 +1,12 @@
 package pl.zsgornik.ui;
 
 import java.util.List;
-import pl.zsgornik.model.*;
 import pl.zsgornik.enums.TypPrzedmiotu;
+import pl.zsgornik.model.Nauczyciel;
+import pl.zsgornik.model.Przedmiot;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import static pl.zsgornik.service.DziennikLekcyjny.getLoggedAs;
 import static pl.zsgornik.util.Util.pauseAndReturn;
 
 public class PrzedmiotyScreen extends Screen {
@@ -19,6 +21,8 @@ public class PrzedmiotyScreen extends Screen {
         System.out.println("2. Dodaj przedmiot");
         System.out.println("3. Usuń przedmiot");
         System.out.println("4. Zmień typ przedmiotu");
+        System.out.println("5. Dodaj siebie do przedmiotu");
+        System.out.println("6. Usuń siebie z przedmiotu");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -37,6 +41,12 @@ public class PrzedmiotyScreen extends Screen {
                 break;
             case "4":
                 editSubject();
+                break;
+            case "5":
+                addTeacherToSubject();
+                break;
+            case "6":
+                removeTeacherFromSubject();
                 break;
             case "0":
                 menuManager.popScreen();
@@ -181,6 +191,69 @@ public class PrzedmiotyScreen extends Screen {
             }
         }
         pauseAndReturn();
+    }
+
+    private void addTeacherToSubject() {
+        System.out.println("\n=== DODAWANIE SIEBIE DO PRZEDMIOTU ===");
+        Nauczyciel loggedTeacher = getLoggedAs();
+        System.out.println("Zalogowany jako: " + loggedTeacher.fullName());
+        
+        Przedmiot subject = selectionHelper.selectSubject();
+        if (subject == null) {
+            return;
+        }
+        
+        if (subject.getTeachers().contains(loggedTeacher)) {
+            pauseAndReturn("Jesteś już przypisany do tego przedmiotu.");
+            return;
+        }
+        
+        subject.addTeacher(loggedTeacher);
+        pauseAndReturn("\nDodano Cię do przedmiotu: " + subject.getType().getName());
+    }
+
+    private void removeTeacherFromSubject() {
+        List<Przedmiot> subjects = dziennik.getSubjects();
+        Nauczyciel loggedTeacher = getLoggedAs();
+        
+        List<Przedmiot> teacherSubjects = subjects.stream()
+            .filter(s -> s.getTeachers().contains(loggedTeacher))
+            .toList();
+            
+        if (teacherSubjects.isEmpty()) {
+            pauseAndReturn("\nNie jesteś przypisany do żadnego przedmiotu.");
+            return;
+        }
+
+        System.out.println("\n=== USUWANIE SIEBIE Z PRZEDMIOTU ===");
+        System.out.println("Zalogowany jako: " + loggedTeacher.fullName());
+        System.out.println("\nTwoje przedmioty:");
+        for (int i = 0; i < teacherSubjects.size(); i++) {
+            Przedmiot subject = teacherSubjects.get(i);
+            System.out.println((i + 1) + ". " + subject.getType().getName());
+        }
+        System.out.println("0. Anuluj");
+        System.out.print("Wybierz numer przedmiotu: ");
+
+        try {
+            int idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+            if (idx == -1) {
+                return;
+            }
+            if (idx < 0 || idx >= teacherSubjects.size()) {
+                pauseAndReturn("Nieprawidłowy numer przedmiotu.");
+                return;
+            }
+            
+            Przedmiot subject = teacherSubjects.get(idx);
+            if (subject.removeTeacher(loggedTeacher)) {
+                pauseAndReturn("\nUsunięto Cię z przedmiotu: " + subject.getType().getName());
+            } else {
+                pauseAndReturn("\nNie udało się usunąć z przedmiotu.");
+            }
+        } catch (NumberFormatException e) {
+            pauseAndReturn("Nieprawidłowy format liczby.");
+        }
     }
 }
 

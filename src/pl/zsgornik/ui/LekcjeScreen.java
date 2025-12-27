@@ -2,9 +2,13 @@ package pl.zsgornik.ui;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import pl.zsgornik.enums.StatusObecnosci;
-import pl.zsgornik.model.*;
+import pl.zsgornik.model.Klasa;
+import pl.zsgornik.model.Lekcja;
+import pl.zsgornik.model.Nauczyciel;
+import pl.zsgornik.model.Obecnosc;
+import pl.zsgornik.model.Przedmiot;
+import pl.zsgornik.model.Uczen;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 import static pl.zsgornik.util.Util.pauseAndReturn;
@@ -38,15 +42,19 @@ public class LekcjeScreen extends Screen {
                 registerClassAttendance();
                 break;
             case "4":
-                Lekcja attendanceLesson = selectLesson();
-                assert attendanceLesson != null;
-                Obecnosc attendance = selectAttendance(attendanceLesson);
+                Lekcja attendanceLesson = selectionHelper.selectLesson();
+                if (attendanceLesson == null) {
+                    break;
+                }
+                Obecnosc attendance = selectionHelper.selectAttendance(attendanceLesson);
                 if (attendance == null) {
-                    return;
+                    break;
                 }
                 StatusObecnosci newStatus = StatusObecnosci.chooseType();
-                attendance.setStatus(newStatus);
-                ObecnosciScreen.punishStudentForUnexcusedHours(dziennik, attendance.getStudent());
+                if (newStatus != null) {
+                    attendance.setStatus(newStatus);
+                    ObecnosciScreen.punishStudentForUnexcusedHours(dziennik, attendance.getStudent());
+                }
                 pauseAndReturn();
                 break;
             case "0":
@@ -59,107 +67,24 @@ public class LekcjeScreen extends Screen {
     }
 
     private void registerClassAttendance() {
-        Lekcja lesson = LekcjeScreen.selectLesson();
+        Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
             pauseAndReturn("Nieprawidłowa opcja");
             return;
         }
-        Klasa group = lesson.getGroup();
-        List<Uczen> students = group.getStudents();
+        List<Uczen> students = lesson.getGroup().getStudents();
 
-        for (Uczen u : students) {
-            System.out.printf("\nTyp obecności dla %s", u);
+        for (Uczen student : students) {
+            System.out.printf("\nTyp obecności dla %s: ", student);
             StatusObecnosci type = StatusObecnosci.chooseType();
             if (type == null) {
                 pauseAndReturn("Nieprawidłowa opcja");
                 break;
             }
-            lesson.registerAttendance(u, type);
+            lesson.registerAttendance(student, type);
         }
         System.out.println("\nDodano obecności!");
         pauseAndReturn();
-    }
-
-    public static Lekcja selectLesson() {
-        List<Lekcja> lessons  = dziennik.getLessons();
-
-        if (lessons.isEmpty()) {
-            System.out.println("Brak lekcji w systemie");
-            return null;
-        }
-
-        System.out.println("\n=== WYBIERZ LEKCJE ===");
-        for (int i = 0; i < lessons.size(); i++) {
-            Lekcja lesson = lessons.get(i);
-            System.out.println((i + 1) + ". " + lesson);
-        }
-        System.out.println("0. Anuluj");
-        System.out.print("Wybierz numer: ");
-
-        String input = menuManager.getScanner().nextLine();
-        int choice;
-
-        try {
-            choice = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy numer");
-            return null;
-        }
-
-        if (choice == 0) {
-            return null;
-        }
-
-        if (choice < 1 || choice > lessons.size()) {
-            System.out.println("Numer poza zakresem");
-            return null;
-        }
-
-        return lessons.get(choice - 1);
-    }
-
-    private Obecnosc selectAttendance(Lekcja lesson) {
-        List<Obecnosc> attendance;
-        try {
-            attendance = lesson.getAttendances();
-        } catch (NullPointerException e) {
-            System.out.println("Nieprawidłowa lekcja");
-            return null;
-        }
-
-        if (attendance.isEmpty()) {
-            System.out.println("Brak obecności na tej lekcji");
-            return null;
-        }
-
-        System.out.println("\n=== WYBIERZ OBECNOSC ===");
-        for (int i = 0; i < attendance.size(); i++) {
-            Obecnosc newAttendance = attendance.get(i);
-            System.out.println((i + 1) + ". " + newAttendance);
-        }
-        System.out.println("0. Anuluj");
-        System.out.print("Wybierz numer: ");
-
-        String input = menuManager.getScanner().nextLine();
-        int choice;
-
-        try {
-            choice = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy numer");
-            return null;
-        }
-
-        if (choice == 0) {
-            return null;
-        }
-
-        if (choice < 1 || choice > attendance.size()) {
-            System.out.println("Numer poza zakresem");
-            return null;
-        }
-
-        return attendance.get(choice - 1);
     }
 
     private void displayLessons() {
@@ -200,7 +125,7 @@ public class LekcjeScreen extends Screen {
             Przedmiot subject = subjects.get(subjectIndex);
             Nauczyciel teacher = subject.getTeachers().isEmpty() ? null : subject.getTeachers().getFirst();
 
-            Klasa klasa = KlasyScreen.selectClass();
+            Klasa klasa = selectionHelper.selectClass();
             if (klasa == null) {
                 return;
             }

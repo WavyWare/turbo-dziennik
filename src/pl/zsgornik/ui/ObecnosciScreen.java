@@ -2,8 +2,12 @@ package pl.zsgornik.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import pl.zsgornik.model.*;
 import pl.zsgornik.enums.StatusObecnosci;
+import pl.zsgornik.model.Klasa;
+import pl.zsgornik.model.Lekcja;
+import pl.zsgornik.model.Obecnosc;
+import pl.zsgornik.model.Uczen;
+import pl.zsgornik.model.Uwaga;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 import static pl.zsgornik.util.Util.pauseAndReturn;
@@ -43,7 +47,7 @@ public class ObecnosciScreen extends Screen {
     private void displayAttendance() {
         System.out.println("\n=== OBECNOŚCI ===");
 
-        Lekcja lesson = LekcjeScreen.selectLesson();
+        Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
             pauseAndReturn();
             return;
@@ -66,13 +70,13 @@ public class ObecnosciScreen extends Screen {
     private void registerAttendance () {
         System.out.println("\n=== REJESTROWANIE OBECNOŚCI ===");
 
-        Lekcja lesson = LekcjeScreen.selectLesson();
+        Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
             pauseAndReturn();
             return;
         }
 
-        Uczen student = KlasyScreen.chooseStudent(lesson.getGroup());
+        Uczen student = selectionHelper.chooseStudent(lesson.getGroup());
         if (student == null) {
             pauseAndReturn();
             return;

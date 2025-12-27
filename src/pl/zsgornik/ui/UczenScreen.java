@@ -1,9 +1,9 @@
 package pl.zsgornik.ui;
 
 import java.util.List;
-import java.util.Objects;
-
-import pl.zsgornik.model.*;
+import pl.zsgornik.model.Klasa;
+import pl.zsgornik.model.Uczen;
+import pl.zsgornik.model.Uwaga;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 import static pl.zsgornik.util.Util.pauseAndReturn;
@@ -18,12 +18,13 @@ public class UczenScreen extends Screen {
         System.out.println("\n=== UCZNIOWIE ===");
         System.out.println("\n1. Lista uczniów (według klas)");
         System.out.println("2. Dodaj ucznia do klasy");
-        System.out.println("3. Raport frekwencji ucznia");
-        System.out.println("4. Raport średnich ocen ucznia");
-        System.out.println("5. Wyświetl uwagi ucznia");
-        System.out.println("6. Dodaj uwagę dla ucznia");
-        System.out.println("7. Edytuj opis uwagi dla ucznia");
-        System.out.println("8. Wyświetl raport zachowania");
+        System.out.println("3. Usuń ucznia z klasy");
+        System.out.println("4. Raport frekwencji ucznia");
+        System.out.println("5. Raport średnich ocen ucznia");
+        System.out.println("6. Wyświetl uwagi ucznia");
+        System.out.println("7. Dodaj uwagę dla ucznia");
+        System.out.println("8. Edytuj opis uwagi dla ucznia");
+        System.out.println("9. Wyświetl raport zachowania");
         System.out.println("0. Powrót");
         System.out.print("\nWybierz opcję: ");
     }
@@ -38,21 +39,24 @@ public class UczenScreen extends Screen {
                 addStudent();
                 break;
             case "3":
-                reportPresence();
+                removeStudent();
                 break;
             case "4":
-                reportGrades();
+                reportPresence();
                 break;
             case "5":
-                displayNotes();
+                reportGrades();
                 break;
             case "6":
-                addNote();
+                displayNotes();
                 break;
             case "7":
-                editNote();
+                addNote();
                 break;
             case "8":
+                editNote();
+                break;
+            case "9":
                 reportBehavior();
                 break;
             case "0":
@@ -66,6 +70,7 @@ public class UczenScreen extends Screen {
 
     private void editNote() {
         Uwaga note = chooseNote();
+        assert note != null;
         System.out.printf("Stary opis: %s", note.getDescription());
         System.out.println("\nPodaj nowy opis uwagi:");
         String newDescription = menuManager.getScanner().nextLine();
@@ -77,47 +82,19 @@ public class UczenScreen extends Screen {
         pauseAndReturn("Zastosowano zmiany");
     }
 
-    public Uwaga chooseNote() {
-        List<Uwaga> notes = Objects.requireNonNull(chooseStudentWithClass()).getBehaviouralNotes();
-
-        if (notes == null || notes.isEmpty()) {
-            pauseAndReturn("Uczeń nie ma uwag. Nic do zrobienia.");
+    private Uwaga chooseNote() {
+        Uczen student = selectionHelper.chooseStudentWithClass();
+        if (student == null) {
             return null;
         }
-
-        System.out.println("\n=== WYBIERZ UWAGĘ ===");
-        for (int i = 0; i < notes.size(); i++) {
-            Uwaga note = notes.get(i);
-            System.out.println((i + 1) + ". " + note);
-        }
-        System.out.println("0. Anuluj");
-        System.out.print("Wybierz numer: ");
-
-        String input = menuManager.getScanner().nextLine();
-        int choice;
-
-        try {
-            choice = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            System.out.println("Nieprawidłowy numer");
-            return null;
-        }
-
-        if (choice == 0) {
-            return null;
-        }
-
-        if (choice < 1 || choice > notes.size()) {
-            System.out.println("Numer poza zakresem");
-            return null;
-        }
-
-        return notes.get(choice - 1);
+        return selectionHelper.selectNote(student);
     }
 
     private void reportBehavior() {
-        Uczen student = chooseStudentWithClass();
-        assert student != null;
+        Uczen student = selectionHelper.chooseStudentWithClass();
+        if (student == null) {
+            return;
+        }
         int negatives = 0;
         int positives = 0;
         for (Uwaga u: student.getBehaviouralNotes()) {
@@ -135,8 +112,10 @@ public class UczenScreen extends Screen {
     }
 
     private void addNote() {
-        Uczen student = chooseStudentWithClass();
-        assert student != null;
+        Uczen student = selectionHelper.chooseStudentWithClass();
+        if (student == null) {
+            return;
+        }
         System.out.println("\nPodaj treść uwagi:");
         String description = menuManager.getScanner().nextLine();
         if (description.isEmpty()) {
@@ -151,9 +130,11 @@ public class UczenScreen extends Screen {
     }
 
     private void displayNotes() {
-        Uczen student = chooseStudentWithClass();
-        System.out.println("\nUwagi dla ucznia: "+student);
-        assert student != null;
+        Uczen student = selectionHelper.chooseStudentWithClass();
+        if (student == null) {
+            return;
+        }
+        System.out.println("\nUwagi dla ucznia: " + student);
         List<Uwaga> behaviouralNotes = student.getBehaviouralNotes();
         for (int i = 0; i < behaviouralNotes.size(); i++) {
             System.out.println((i + 1)+ ". " + behaviouralNotes.get(i));
@@ -184,7 +165,7 @@ public class UczenScreen extends Screen {
 
     private void addStudent() {
         System.out.println("\n=== DODAWANIE UCZNIA ===");
-        Klasa chosenClass = KlasyScreen.selectClass();
+        Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
             return;
         }
@@ -198,21 +179,31 @@ public class UczenScreen extends Screen {
 
         Uczen newStudent = new Uczen(fullName);
         chosenClass.addStudent(newStudent);
-
         pauseAndReturn("\nDodano ucznia " + fullName + " do klasy " + chosenClass.getClassName());
     }
 
-    private Uczen chooseStudentWithClass() {
-        Klasa chosenClass = KlasyScreen.selectClass();
+    private void removeStudent() {
+        System.out.println("\n=== USUWANIE UCZNIA Z KLASY ===");
+        Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
-            return null;
+            return;
         }
-        return KlasyScreen.chooseStudent(chosenClass);
+
+        Uczen student = selectionHelper.chooseStudent(chosenClass);
+        if (student == null) {
+            return;
+        }
+
+        if (chosenClass.removeStudent(student)) {
+            pauseAndReturn("\nUsunięto ucznia " + student.getFullName() + " z klasy " + chosenClass.getClassName());
+        } else {
+            pauseAndReturn("\nNie udało się usunąć ucznia z klasy.");
+        }
     }
 
     private void reportPresence() {
         System.out.println("\n=== RAPORT FREKWENCJI UCZNIA ===");
-        Uczen student = chooseStudentWithClass();
+        Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
             return;
         }
@@ -227,7 +218,11 @@ public class UczenScreen extends Screen {
     }
 
     private void reportGrades() {
-        dziennik.printStudentReport(chooseStudentWithClass());
+        Uczen student = selectionHelper.chooseStudentWithClass();
+        if (student == null) {
+            return;
+        }
+        dziennik.printStudentReport(student);
         pauseAndReturn();
     }
 }
