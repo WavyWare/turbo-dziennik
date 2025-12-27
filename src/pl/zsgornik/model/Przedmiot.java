@@ -19,6 +19,10 @@ public class Przedmiot {
         }
     }
 
+    public boolean removeTeacher(Nauczyciel teacher) {
+        return teachers.remove(teacher);
+    }
+
     public List<Nauczyciel> getTeachers() {
         return teachers;
     }

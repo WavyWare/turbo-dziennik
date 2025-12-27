@@ -27,6 +27,13 @@ public class Klasa {
         }
     }
 
+    public boolean removeStudent(Uczen student) {
+        if (classLeader != null && classLeader.equals(student)) {
+            classLeader = null;
+        }
+        return students.remove(student);
+    }
+
     public void setClassName(String className) {
         this.className = className;
     }
