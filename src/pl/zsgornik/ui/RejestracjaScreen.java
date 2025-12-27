@@ -78,5 +78,3 @@ public class RejestracjaScreen extends Screen {
         menuManager.replaceScreen(new StartScreen(menuManager, dziennik));
     }
 }
-
-
