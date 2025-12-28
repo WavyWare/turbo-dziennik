@@ -153,6 +153,7 @@ AI było użyte w celach pomocniczych podczas:
    - `Stream` by skrócić i uprościć kod
    - `Stack` dla zarządzania ekranami
 4. Zaproponowania struktury projektu, czyli który obiekt klasy powinna należeć, do którego obiektu i gdzie powinno być wszystko przechowywane (w moim przypadku `DziennikLekcyjny.java`).
+5. Niektóre sekcje w tym pliku, np. Troubleshooting.
 
 Działanie całego kodu w projekcie rozumiem.
 
