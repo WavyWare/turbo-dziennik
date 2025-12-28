@@ -32,6 +32,8 @@ public class Util {
 
     public static void pauseAndReturn() {
         System.out.println("Naciśnij Enter aby spróbować ponownie...");
-        new Scanner(System.in).nextLine();
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+        sc.close();
     }
 }
