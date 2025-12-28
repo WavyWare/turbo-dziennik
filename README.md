@@ -116,5 +116,31 @@ java out/Main
 ## Bezpieczeństwo
 Zostało użyte hash'owanie haseł, autoryzacja użytkowników i wymagania haseł
 
+## Struktura projektu
+Projekt zorganizowany jest w następujący sposób:
+- `src/pl/zsgornik/` - główny pakiet aplikacji
+- `src/pl/zsgornik/model/` - klasy modelowe (Klasa, Uczen, Nauczyciel, Lekcja, Ocena, Obecnosc, Przedmiot, Uwaga)
+- `src/pl/zsgornik/enums/` - typy wyliczeniowe (StatusObecnosci, TypOceny, TypPrzedmiotu)
+- `src/pl/zsgornik/service/` - warstwa serwisowa (DziennikLekcyjny)
+- `src/pl/zsgornik/ui/` - interfejs użytkownika (ekrany aplikacji)
+- `src/pl/zsgornik/util/` - klasy pomocnicze (SelectionHelper, Tuple, Util)
+
+## Testowanie
+Aplikacja została przetestowana pod kątem:
+- Poprawności kompilacji
+- Działania podstawowych funkcji
+- Obsługi danych wejściowych użytkownika
+- Zarządzania stanem aplikacji
+
+## Troubleshooting
+Problem: Błąd kompilacji "cannot find symbol `getFirst()`"
+Rozwiązanie: Używaj Java 21 lub nowszej. Metoda `getFirst()` została dodana w Java 21.
+
+Problem: Błąd "Could not find or load main class"
+Rozwiązanie: Upewnij się, że kompilujesz i uruchamiasz z odpowiedniej ścieżki:
+```bash
+javac -d out $(find src/pl/zsgornik -name "*.java")
+java -cp out pl.zsgornik.Main
+```
 ## Autor
 Jan Florek, najzdolniejszy uczeń klasy 3bT
