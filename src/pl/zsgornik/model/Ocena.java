@@ -45,7 +45,7 @@ public class Ocena {
         this.value = value;
     }
 
-    @Override()
+    @Override
     public String toString() {
         return "Ocena: " + value + ", Komentarz: " + comment + ", Ucznia: " + student + " z lekcji " + lesson;
     }
