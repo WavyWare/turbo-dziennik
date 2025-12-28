@@ -48,6 +48,7 @@ public class OcenyScreen extends Screen {
                 }
                 System.out.print("Podaj nową wartość oceny: ");
                 double value = menuManager.getScanner().nextDouble();
+                menuManager.getScanner().nextLine();
                 if (value < 1 || value > 6) {
                     pauseAndReturn("Wartość musi być między 1 a 6");
                     break;
@@ -97,12 +98,13 @@ public class OcenyScreen extends Screen {
 
         System.out.println("Podaj wartość oceny (od 1 do 6)");
         double gradeValue = menuManager.getScanner().nextDouble();
+        menuManager.getScanner().nextLine();
         if (gradeValue < 1 || gradeValue > 6) {
             pauseAndReturn();
             return;
         }
         System.out.println("Podaj komentarz oceny (może być pusty)");
-        String comment = menuManager.getScanner().next();
+        String comment = menuManager.getScanner().nextLine();
 
         Ocena newGrade;
         if (comment.isEmpty()) {
@@ -126,7 +128,7 @@ public class OcenyScreen extends Screen {
             return null;
         }
         
-        Lekcja latestLesson = teacherLessons.getFirst();
+        Lekcja latestLesson = teacherLessons.get(0);
 
         for (Lekcja lesson: teacherLessons) {
             if (latestLesson.getDate().isBefore(lesson.getDate())) {
