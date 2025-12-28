@@ -17,10 +17,6 @@ public class Obecnosc {
         return student;
     }
 
-    public Lekcja getLesson() {
-        return lesson;
-    }
-
     public StatusObecnosci getStatus() {
         return status;
     }

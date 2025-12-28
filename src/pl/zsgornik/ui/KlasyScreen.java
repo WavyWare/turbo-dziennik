@@ -18,7 +18,7 @@ public class KlasyScreen extends Screen {
         System.out.println("\n=== KLASY ===");
         System.out.println("\n1. Lista klas");
         System.out.println("2. Dodaj klasę");
-        System.out.println("3. Zmień nazwe klasy");
+        System.out.println("3. Zmień nazwę klasy");
         System.out.println("4. Ustaw przewodniczącego klasy");
         System.out.println("5. Ustaw wychowawce");
         System.out.println("0. Powrót");
@@ -61,7 +61,7 @@ public class KlasyScreen extends Screen {
                     break;
                 }
                 changeNameGroup.setClassName(newClassName);
-                System.out.println("\nPomyślnie zmieniono nazwe\nNaciśnij Enter aby kontynuować...");
+                System.out.println("\nPomyślnie zmieniono nazwę\nNaciśnij Enter aby kontynuować...");
                 menuManager.getScanner().nextLine();
                 break;
             case "4":

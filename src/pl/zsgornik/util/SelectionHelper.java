@@ -49,7 +49,7 @@ public class SelectionHelper {
     public Klasa selectClass() {
         return selectFromList(
             dziennik.getGroups(),
-            "WYBIERZ KLASE",
+            "WYBIERZ KLASĘ",
             "Brak klas w systemie",
             group -> group.getClassName() + " (Wychowawca: " + group.getSupervisor().fullName() + ")"
         );
@@ -101,7 +101,7 @@ public class SelectionHelper {
             List<Obecnosc> attendances = lesson.getAttendances();
             return selectFromList(
                 attendances,
-                "WYBIERZ OBECNOSC",
+                "WYBIERZ OBECNOŚĆ",
                 "Brak obecności na tej lekcji",
                 Obecnosc::toString
             );
@@ -114,7 +114,7 @@ public class SelectionHelper {
     public Ocena selectGrade() {
         return selectFromList(
             dziennik.getGrades(),
-            "WYBIERZ OCENE",
+            "WYBIERZ OCENĘ",
             "Brak ocen w systemie",
             Ocena::toString
         );

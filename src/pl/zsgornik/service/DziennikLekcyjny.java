@@ -164,9 +164,9 @@ public class DziennikLekcyjny {
 
         double avgTotal = reportAverageGrade(student);
         if (avgTotal > 0) {
-            System.out.printf("Srednia ocen ogolna: %.2f%n", avgTotal);
+            System.out.printf("Średnia ocen ogólna: %.2f%n", avgTotal);
         } else {
-            System.out.println("Srednia ocen ogolna: Brak ocen");
+            System.out.println("Średnia ocen ogólna: Brak ocen");
         }
 
         double presence = reportPresencePercent(student);
@@ -176,11 +176,11 @@ public class DziennikLekcyjny {
             System.out.println("Frekwencja: Brak danych (brak lekcji)");
         }
 
-        System.out.println("\nOCENY Z PRZEDMIOTOW:");
+        System.out.println("\nOCENY Z PRZEDMIOTÓW:");
         List<Tuple<Przedmiot, Double>> subjectsData = getAverageGradeBySubjects(student);
         
         if (subjectsData.isEmpty()) {
-            System.out.println("  Brak przedmiotow przypisanych do klasy (brak odbytych lekcji).");
+            System.out.println("  Brak przedmiotów przypisanych do klasy (brak odbytych lekcji).");
         } else {
             for (Tuple<Przedmiot, Double> entry : subjectsData) {
                 String subjectName = entry.getFirst().toString();
