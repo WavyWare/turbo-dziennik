@@ -144,3 +144,17 @@ java -cp out pl.zsgornik.Main
 ```
 ## Autor
 Jan Florek, najzdolniejszy uczeń klasy 3bT
+
+## Aneks dot. sztucznej inteligencji
+AI było użyte w celach pomocniczych podczas:
+1. Sugestii wyglądu interfejsu użytkownika
+2. Stworzenie tablic z imionami, nazwiskami i nazwami klas w `Main.java`
+3. Uzyskania wskazówek dotyczących wdrożenia bardziej zaawansowanych technologii, których nauczyłem się samodzielnie, poza zakresem zajęć szkolnych. Dotyczyło to tylko:
+   - `Stream` by skrócić i uprościć kod
+   - `Stack` dla zarządzania ekranami
+4. Zaproponowania struktury projektu, czyli który obiekt klasy powinna należeć, do którego obiektu i gdzie powinno być wszystko przechowywane (w moim przypadku `DziennikLekcyjny.java`).
+
+Działanie całego kodu w projekcie rozumiem.
+
+### Podpowiedzi IntelliJ
+> Niektóre podpowiedzi od IntelliJ mogą być niesłusznie pomylone z działaniem AI, dlatego niektóre zmiany w moim projekcie, np. zmiana klasy na rekord i inne, mogły zależeć od IDE
