@@ -22,13 +22,12 @@ public class LoginScreen extends Screen {
         }
 
         System.out.print("Hasło: ");
-        String password = menuManager.getScanner().nextLine().trim();
+        String password = menuManager.getScanner().next().trim();
 
         boolean success = dziennik.login(input, password);
         
         if (success) {
             System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().fullName());
-            pauseAndReturn();
             menuManager.replaceScreen(new MainMenuScreen(menuManager, dziennik));
         } else {
             pauseAndReturn("Nieprawidłowy login lub hasło");

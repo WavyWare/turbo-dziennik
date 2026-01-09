@@ -40,7 +40,7 @@ public class MenuManager {
             currentScreen.display();
             
             if (!screenStack.isEmpty() && screenStack.peek() == currentScreen) {
-                String input = scanner.nextLine().trim();
+                String input = scanner.next().trim();
                 currentScreen.handleInput(input);
             }
         }
