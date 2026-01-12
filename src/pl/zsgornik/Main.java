@@ -1,5 +1,6 @@
 package pl.zsgornik;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import pl.zsgornik.model.*;
 import pl.zsgornik.enums.TypPrzedmiotu;
@@ -36,7 +37,7 @@ public class Main {
         "7A", "7B"
     };
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ArrayList<Klasa> groups = new ArrayList<>();
         ArrayList<Nauczyciel> teachers = new ArrayList<>();
         ArrayList<Przedmiot> subjects = new ArrayList<>();

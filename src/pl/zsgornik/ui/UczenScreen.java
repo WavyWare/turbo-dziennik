@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.io.IOException;
 import java.util.List;
 import pl.zsgornik.model.Klasa;
 import pl.zsgornik.model.Uczen;
@@ -30,7 +31,7 @@ public class UczenScreen extends Screen {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input) throws IOException {
         switch (input) {
             case "1":
                 listStudents();
@@ -68,12 +69,12 @@ public class UczenScreen extends Screen {
         }
     }
 
-    private void editNote() {
+    private void editNote() throws IOException {
         Uwaga note = chooseNote();
         assert note != null;
         System.out.printf("Stary opis: %s", note.getDescription());
         System.out.println("\nPodaj nowy opis uwagi:");
-        String newDescription = menuManager.getScanner().nextLine();
+        String newDescription = menuManager.getConsole().readLine();
         if (newDescription.isEmpty()){
             pauseAndReturn("Opis nie może być pusty");
             return;
@@ -111,19 +112,19 @@ public class UczenScreen extends Screen {
         pauseAndReturn();
     }
 
-    private void addNote() {
+    private void addNote() throws IOException {
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
             return;
         }
         System.out.println("\nPodaj treść uwagi:");
-        String description = menuManager.getScanner().nextLine();
+        String description = menuManager.getConsole().readLine();
         if (description.isEmpty()) {
             pauseAndReturn("Opis nie może być pusty");
             return;
         }
         System.out.println("Czy uwaga jest negatywna (domyślnie: tak): tak/nie");
-        boolean isPositive = menuManager.getScanner().nextLine().equalsIgnoreCase("nie");
+        boolean isPositive = menuManager.getConsole().readLine().equalsIgnoreCase("nie");
         Uwaga newNote = new Uwaga(isPositive, description);
         student.pushNote(newNote);
         pauseAndReturn();
@@ -163,7 +164,7 @@ public class UczenScreen extends Screen {
         pauseAndReturn();
     }
 
-    private void addStudent() {
+    private void addStudent() throws IOException {
         System.out.println("\nturbo dziennik - DODAWANIE UCZNIA");
         Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
@@ -171,7 +172,7 @@ public class UczenScreen extends Screen {
         }
 
         System.out.print("Podaj imię i nazwisko ucznia: ");
-        String fullName = menuManager.getScanner().nextLine().trim();
+        String fullName = menuManager.getConsole().readLine().trim();
         if (fullName.isEmpty()) {
             pauseAndReturn("Imię i nazwisko nie może być puste.");
             return;

@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.io.IOException;
 import java.util.List;
 import pl.zsgornik.model.Lekcja;
 import pl.zsgornik.model.Ocena;
@@ -26,7 +27,7 @@ public class OcenyScreen extends Screen {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input) throws IOException {
         switch (input) {
             case "1":
                 displayGrades();
@@ -47,8 +48,8 @@ public class OcenyScreen extends Screen {
                     break;
                 }
                 System.out.print("Podaj nową wartość oceny: ");
-                double value = menuManager.getScanner().nextDouble();
-                menuManager.getScanner().nextLine();
+                double value = Double.parseDouble(menuManager.getConsole().readLine());
+                menuManager.getConsole().readLine();
                 if (value < 1 || value > 6) {
                     pauseAndReturn("Wartość musi być między 1 a 6");
                     break;
@@ -62,7 +63,7 @@ public class OcenyScreen extends Screen {
                     break;
                 }
                 System.out.print("Podaj nowy komentarz: ");
-                String comment = menuManager.getScanner().nextLine();
+                String comment = menuManager.getConsole().readLine();
                 if (comment.isEmpty()) {
                     pauseAndReturn("Komentarz nie może być pusty");
                     break;
@@ -80,7 +81,7 @@ public class OcenyScreen extends Screen {
     }
 
 
-    private void addGrade() {
+    private void addGrade() throws IOException {
         System.out.println("\nturbo dziennik - DODAWANIE OCENY");
 
         Lekcja lesson = findLastTeacherLesson();
@@ -97,14 +98,14 @@ public class OcenyScreen extends Screen {
         }
 
         System.out.println("Podaj wartość oceny (od 1 do 6)");
-        double gradeValue = menuManager.getScanner().nextDouble();
-        menuManager.getScanner().nextLine();
+        double gradeValue = Double.parseDouble(menuManager.getConsole().readLine());
+        menuManager.getConsole().readLine();
         if (gradeValue < 1 || gradeValue > 6) {
             pauseAndReturn();
             return;
         }
         System.out.println("Podaj komentarz oceny (może być pusty)");
-        String comment = menuManager.getScanner().nextLine();
+        String comment = menuManager.getConsole().readLine();
 
         Ocena newGrade;
         if (comment.isEmpty()) {

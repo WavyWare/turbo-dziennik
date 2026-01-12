@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.io.IOException;
 import java.util.List;
 import pl.zsgornik.model.Klasa;
 import pl.zsgornik.model.Nauczyciel;
@@ -26,14 +27,14 @@ public class KlasyScreen extends Screen {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input) throws IOException {
         switch (input) {
             case "1":
                 displayClasses();
                 break;
             case "2":
                 System.out.print("\nPodaj nazwę klasy: ");
-                String className = menuManager.getScanner().nextLine().trim();
+                String className = menuManager.getConsole().readLine().trim();
                 if (className.isEmpty()) {
                     pauseAndReturn("Nazwa klasy nie może być pusta");
                     break;
@@ -51,7 +52,7 @@ public class KlasyScreen extends Screen {
                     break;
                 }
                 System.out.print("Podaj nową nazwę klasy: ");
-                String newClassName = menuManager.getScanner().nextLine().trim();
+                String newClassName = menuManager.getConsole().readLine().trim();
                 if (newClassName.isEmpty()) {
                     System.out.println("Nowa nazwa klasy nie może być pusta");
                     break;
@@ -62,7 +63,7 @@ public class KlasyScreen extends Screen {
                 }
                 changeNameGroup.setClassName(newClassName);
                 System.out.println("\nPomyślnie zmieniono nazwę\nNaciśnij Enter aby kontynuować...");
-                menuManager.getScanner().nextLine();
+                menuManager.getConsole().readLine();
                 break;
             case "4":
                 Klasa leaderGroup = selectionHelper.selectClass();
@@ -83,7 +84,7 @@ public class KlasyScreen extends Screen {
                 if (supervisor != null) {
                     supervisorGroup.setSupervisor(supervisor);
                     System.out.println("\nPomyślnie ustawiono wychowawce\nNaciśnij Enter aby kontynuować...");
-                    menuManager.getScanner().nextLine();
+                    menuManager.getConsole().readLine();
                 }
                 break;
             case "0":
@@ -95,7 +96,7 @@ public class KlasyScreen extends Screen {
         }
     }
 
-    private void displayClasses() {
+    private void displayClasses() throws IOException {
         System.out.println("\nturbo dziennik - LISTA KLAS");
         List<Klasa> classes = dziennik.getGroups();
         if (classes.isEmpty()) {
@@ -109,7 +110,7 @@ public class KlasyScreen extends Screen {
             }
         }
         System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getScanner().nextLine();
+        menuManager.getConsole().readLine();
     }
 
 }
