@@ -1,20 +1,22 @@
 package pl.zsgornik.ui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Stack;
-import java.util.Scanner;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 public class MenuManager {
     private final Stack<Screen> screenStack;
-    private final Scanner scanner;
     private final DziennikLekcyjny dziennik;
+    private final BufferedReader reader;
     private boolean running;
 
     public MenuManager(DziennikLekcyjny dziennik) {
         this.dziennik = dziennik;
         this.screenStack = new Stack<>();
-        this.scanner = new Scanner(System.in);
         this.running = true;
+        this.reader = new BufferedReader(new InputStreamReader(System.in));
     }
 
     public void pushScreen(Screen screen) {
@@ -34,17 +36,16 @@ public class MenuManager {
         screenStack.push(screen);
     }
 
-    public void start() {
+    public void start() throws IOException {
         while (running && !screenStack.isEmpty()) {
             Screen currentScreen = screenStack.peek();
             currentScreen.display();
             
             if (!screenStack.isEmpty() && screenStack.peek() == currentScreen) {
-                String input = scanner.next().trim();
+                String input = getConsole().readLine().trim();
                 currentScreen.handleInput(input);
             }
         }
-        scanner.close();
     }
 
     public void stop() {
@@ -55,8 +56,8 @@ public class MenuManager {
         return dziennik;
     }
 
-    public Scanner getScanner() {
-        return scanner;
+    public BufferedReader getConsole() {
+        return reader;
     }
 
 }

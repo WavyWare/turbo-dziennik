@@ -2,6 +2,8 @@ package pl.zsgornik.ui;
 
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import java.io.IOException;
+
 import static pl.zsgornik.util.Util.pauseAndReturn;
 
 public class LoginScreen extends Screen {
@@ -16,13 +18,13 @@ public class LoginScreen extends Screen {
     }
 
     @Override
-    public void handleInput(String input) {
+    public void handleInput(String input) throws IOException {
         if (input.isEmpty()) {
             return;
         }
 
         System.out.print("Hasło: ");
-        String password = menuManager.getScanner().next().trim();
+        String password = menuManager.getConsole().readLine().trim();
 
         boolean success = dziennik.login(input, password);
         

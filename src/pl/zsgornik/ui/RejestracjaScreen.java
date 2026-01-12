@@ -3,6 +3,8 @@ package pl.zsgornik.ui;
 import pl.zsgornik.model.Nauczyciel;
 import pl.zsgornik.service.DziennikLekcyjny;
 
+import java.io.IOException;
+
 import static pl.zsgornik.util.Util.pauseAndReturn;
 
 public class RejestracjaScreen extends Screen {
@@ -11,13 +13,13 @@ public class RejestracjaScreen extends Screen {
     }
 
     @Override
-    public void display() {
+    public void display() throws IOException {
         System.out.println("\nturbo dziennik -  REJESTRACJA");
 
         String fullName;
         while (true) {
             System.out.print("Podaj imię i nazwisko nauczyciela: ");
-            fullName = menuManager.getScanner().nextLine().trim();
+            fullName = menuManager.getConsole().readLine().trim();
             if (!fullName.isEmpty()) {
                 break;
             }
@@ -27,7 +29,7 @@ public class RejestracjaScreen extends Screen {
         String username;
         while (true) {
             System.out.print("Podaj login: ");
-            String inputUsername = menuManager.getScanner().nextLine().trim();
+            String inputUsername = menuManager.getConsole().readLine().trim();
             if (inputUsername.isEmpty()) {
                 System.out.println("Login nie może być pusty. Spróbuj ponownie.");
                 continue;
@@ -44,7 +46,7 @@ public class RejestracjaScreen extends Screen {
         String password;
         while (true) {
             System.out.print("Podaj hasło: ");
-            password = menuManager.getScanner().nextLine();
+            password = menuManager.getConsole().readLine();
             
             if (password.isEmpty()) {
                 System.out.println("Hasło nie może być puste. Spróbuj ponownie.");

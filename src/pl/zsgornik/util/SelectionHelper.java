@@ -1,7 +1,8 @@
 package pl.zsgornik.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.Function;
 import pl.zsgornik.model.*;
 import pl.zsgornik.service.DziennikLekcyjny;
@@ -10,11 +11,11 @@ import static pl.zsgornik.service.DziennikLekcyjny.getLoggedAs;
 
 public class SelectionHelper {
     private final DziennikLekcyjny dziennik;
-    private final Scanner scanner;
+    private final BufferedReader reader;
 
-    public SelectionHelper(DziennikLekcyjny dziennik, Scanner scanner) {
+    public SelectionHelper(DziennikLekcyjny dziennik, BufferedReader reader) {
         this.dziennik = dziennik;
-        this.scanner = scanner;
+        this.reader = reader;
     }
 
     private <T> T selectFromList(List<T> items, String title, String emptyMessage, Function<T, String> formatter) {
@@ -31,7 +32,7 @@ public class SelectionHelper {
         System.out.print("Wybierz numer: ");
 
         try {
-            int choice = Integer.parseInt(scanner.nextLine().trim());
+            int choice = Integer.parseInt(reader.readLine().trim());
             if (choice == 0) {
                 return null;
             }
@@ -43,6 +44,8 @@ public class SelectionHelper {
         } catch (NumberFormatException e) {
             System.out.println("Nieprawidłowy numer");
             return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

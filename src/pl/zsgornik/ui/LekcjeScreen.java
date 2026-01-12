@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import pl.zsgornik.enums.StatusObecnosci;
@@ -116,7 +117,7 @@ public class LekcjeScreen extends Screen {
         System.out.print("Wybierz przedmiot: ");
         
         try {
-            int subjectIndex = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+            int subjectIndex = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
             if (subjectIndex < 0 || subjectIndex >= subjects.size()) {
                 pauseAndReturn("Nieprawidłowy numer przedmioty");
                 return;
@@ -136,6 +137,8 @@ public class LekcjeScreen extends Screen {
             pauseAndReturn();
         } catch (NumberFormatException e) {
             pauseAndReturn("Nieprawidłowy format liczby");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

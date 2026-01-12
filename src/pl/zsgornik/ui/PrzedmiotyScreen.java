@@ -1,5 +1,6 @@
 package pl.zsgornik.ui;
 
+import java.io.IOException;
 import java.util.List;
 import pl.zsgornik.enums.TypPrzedmiotu;
 import pl.zsgornik.model.Nauczyciel;
@@ -69,10 +70,12 @@ public class PrzedmiotyScreen extends Screen {
                 while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
                     System.out.print("Podaj numer typu przedmiotu: ");
                     try {
-                        String line = menuManager.getScanner().nextLine().trim();
+                        String line = menuManager.getConsole().readLine().trim();
                         selectedTypeIdx = Integer.parseInt(line) - 1;
                     } catch (NumberFormatException e) {
                         selectedTypeIdx = -1;
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                     if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
                         System.out.println("Nieprawidłowy numer typu przedmiotu.");
@@ -101,14 +104,14 @@ public class PrzedmiotyScreen extends Screen {
 
         System.out.print("Podaj numer przedmiotu do usunięcia: ");
         try {
-            int idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+            int idx = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
             if (idx < 0 || idx >= subjects.size()) {
                 System.out.println("Nieprawidłowy numer przedmiotu.");
             } else {
                 Przedmiot removed = subjects.remove(idx);
                 System.out.println("Usunięto przedmiot: " + removed);
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | IOException e) {
             System.out.println("Nieprawidłowy format liczby.");
         }
 
@@ -130,8 +133,8 @@ public class PrzedmiotyScreen extends Screen {
         System.out.print("Podaj numer przedmiotu do zmiany: ");
         int idx;
         try {
-            idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
-        } catch (NumberFormatException e) {
+            idx = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
+        } catch (NumberFormatException | IOException e) {
             pauseAndReturn("Nieprawidłowy format liczby.");
             return;
         }
@@ -154,9 +157,9 @@ public class PrzedmiotyScreen extends Screen {
         while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
             System.out.print("Podaj numer typu przedmiotu: ");
             try {
-                String line = menuManager.getScanner().nextLine().trim();
+                String line = menuManager.getConsole().readLine().trim();
                 selectedTypeIdx = Integer.parseInt(line) - 1;
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | IOException e) {
                 selectedTypeIdx = -1;
             }
             if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
@@ -236,7 +239,7 @@ public class PrzedmiotyScreen extends Screen {
         System.out.print("Wybierz numer przedmiotu: ");
 
         try {
-            int idx = Integer.parseInt(menuManager.getScanner().nextLine().trim()) - 1;
+            int idx = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
             if (idx == -1) {
                 return;
             }
@@ -253,6 +256,8 @@ public class PrzedmiotyScreen extends Screen {
             }
         } catch (NumberFormatException e) {
             pauseAndReturn("Nieprawidłowy format liczby.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
