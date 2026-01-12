@@ -72,6 +72,8 @@ public class Klasa {
 
     @Override
     public String toString() {
-        return className;
+        return className +
+                " (Wychowawca: " + supervisor +
+                ", Uczniowie: " + students.size() + ")";
     }
 }

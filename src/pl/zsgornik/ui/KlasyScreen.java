@@ -100,9 +100,7 @@ public class KlasyScreen extends Screen {
         } else {
             for (int i = 0; i < classes.size(); i++) {
                 Klasa klasa = classes.get(i);
-                System.out.println((i + 1) + ". " + klasa.getClassName() + 
-                    " (Wychowawca: " + klasa.getSupervisor().fullName() +
-                    ", Uczniowie: " + klasa.getStudents().size() + ")");
+                System.out.println((i + 1) + ". " + klasa);
             }
         }
     }
