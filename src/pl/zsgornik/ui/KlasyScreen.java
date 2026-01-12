@@ -7,8 +7,6 @@ import pl.zsgornik.model.Nauczyciel;
 import pl.zsgornik.model.Uczen;
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class KlasyScreen extends Screen {
     public KlasyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -36,15 +34,15 @@ public class KlasyScreen extends Screen {
                 System.out.print("\nPodaj nazwę klasy: ");
                 String className = menuManager.getConsole().readLine().trim();
                 if (className.isEmpty()) {
-                    pauseAndReturn("Nazwa klasy nie może być pusta");
+                    System.out.println("Nazwa klasy nie może być pusta");
                     break;
                 }
                 if (dziennik.getGroups().stream().anyMatch(x -> x.getClassName().equals(className))) {
-                    pauseAndReturn("Klasa o tej nazwie już istnieje");
+                    System.out.println("Klasa o tej nazwie już istnieje");
                     break;
                 } 
                 dziennik.pushGroup(new Klasa(className));
-                pauseAndReturn("Dodano klasę: " + className);
+                System.out.println("Dodano klasę: " + className);
                 break;
             case "3":
                 Klasa changeNameGroup = selectionHelper.selectClass();
@@ -62,8 +60,7 @@ public class KlasyScreen extends Screen {
                     break;
                 }
                 changeNameGroup.setClassName(newClassName);
-                System.out.println("\nPomyślnie zmieniono nazwę\nNaciśnij Enter aby kontynuować...");
-                menuManager.getConsole().readLine();
+                System.out.println("\nPomyślnie zmieniono nazwę\n.");
                 break;
             case "4":
                 Klasa leaderGroup = selectionHelper.selectClass();
@@ -83,20 +80,19 @@ public class KlasyScreen extends Screen {
                 Nauczyciel supervisor = selectionHelper.chooseTeacher();
                 if (supervisor != null) {
                     supervisorGroup.setSupervisor(supervisor);
-                    System.out.println("\nPomyślnie ustawiono wychowawce\nNaciśnij Enter aby kontynuować...");
-                    menuManager.getConsole().readLine();
+                    System.out.println("\nPomyślnie ustawiono wychowawce\n");
                 }
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
 
-    private void displayClasses() throws IOException {
+    private void displayClasses() {
         System.out.println("\nturbo dziennik - LISTA KLAS");
         List<Klasa> classes = dziennik.getGroups();
         if (classes.isEmpty()) {
@@ -109,8 +105,6 @@ public class KlasyScreen extends Screen {
                     ", Uczniowie: " + klasa.getStudents().size() + ")");
             }
         }
-        System.out.println("\nNaciśnij Enter, aby kontynuować...");
-        menuManager.getConsole().readLine();
     }
 
 }

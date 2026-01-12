@@ -158,4 +158,4 @@ AI było użyte w celach pomocniczych podczas:
 Działanie całego kodu w projekcie rozumiem.
 
 ### Podpowiedzi IntelliJ
-> Niektóre podpowiedzi od IntelliJ mogą być niesłusznie pomylone z działaniem AI, dlatego niektóre zmiany w moim projekcie, np. zmiana klasy na rekord i inne, mogły zależeć od IDE
+> Niektóre podpowiedzi od IntelliJ mogą być niesłusznie pomylone z działaniem AI, dlatego niektóre zmiany w moim projekcie, np. zmiana klasy na rekord, `assert` i inne, mogły zależeć od IDE

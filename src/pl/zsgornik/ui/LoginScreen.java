@@ -4,8 +4,6 @@ import pl.zsgornik.service.DziennikLekcyjny;
 
 import java.io.IOException;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class LoginScreen extends Screen {
     public LoginScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -20,6 +18,7 @@ public class LoginScreen extends Screen {
     @Override
     public void handleInput(String input) throws IOException {
         if (input.isEmpty()) {
+            System.out.println("Podaj login");
             return;
         }
 
@@ -32,7 +31,7 @@ public class LoginScreen extends Screen {
             System.out.println("\nZalogowano jako: " + DziennikLekcyjny.getLoggedAs().fullName());
             menuManager.replaceScreen(new MainMenuScreen(menuManager, dziennik));
         } else {
-            pauseAndReturn("Nieprawidłowy login lub hasło");
+            System.out.println("Nieprawidłowy login lub hasło");
         }
     }
 }

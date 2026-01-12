@@ -7,8 +7,6 @@ import pl.zsgornik.model.Ocena;
 import pl.zsgornik.model.Uczen;
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class OcenyScreen extends Screen {
     public OcenyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -39,7 +37,7 @@ public class OcenyScreen extends Screen {
                 Ocena deleteGrade = selectionHelper.selectGrade();
                 if (deleteGrade != null) {
                     dziennik.getGrades().remove(deleteGrade);
-                    pauseAndReturn("Usunięto ocenę");
+                    System.out.println("Usunięto ocenę");
                 }
                 break;
             case "4":
@@ -49,33 +47,33 @@ public class OcenyScreen extends Screen {
                 }
                 System.out.print("Podaj nową wartość oceny: ");
                 double value = Double.parseDouble(menuManager.getConsole().readLine());
-                menuManager.getConsole().readLine();
                 if (value < 1 || value > 6) {
-                    pauseAndReturn("Wartość musi być między 1 a 6");
+                    System.out.println("Wartość musi być między 1 a 6");
                     break;
                 }
                 valueGrade.setValue(value);
-                pauseAndReturn("Pomyślnie dokonano zmian");
+                System.out.println("Pomyślnie dokonano zmian");
                 break;
             case "5":
                 Ocena commentGrade = selectionHelper.selectGrade();
                 if (commentGrade == null) {
+                    System.out.println("Wybierano nieprawidłową ocenę");
                     break;
                 }
                 System.out.print("Podaj nowy komentarz: ");
                 String comment = menuManager.getConsole().readLine();
                 if (comment.isEmpty()) {
-                    pauseAndReturn("Komentarz nie może być pusty");
+                    System.out.println("Komentarz nie może być pusty");
                     break;
                 }
                 commentGrade.setComment(comment);
-                pauseAndReturn("Pomyślnie dokonano zmian");
+                System.out.println("Pomyślnie dokonano zmian");
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -87,21 +85,20 @@ public class OcenyScreen extends Screen {
         Lekcja lesson = findLastTeacherLesson();
         if (lesson == null) {
             System.out.println("Brak lekcji prowadzonych przez tego nauczyciela.");
-            pauseAndReturn();
+            System.out.println();
             return;
         }
 
         Uczen student = selectionHelper.chooseStudent(lesson.getGroup());
         if (student == null) {
-            pauseAndReturn();
+            System.out.println("Wybierano nieprawidłowego ucznia");
             return;
         }
 
         System.out.println("Podaj wartość oceny (od 1 do 6)");
         double gradeValue = Double.parseDouble(menuManager.getConsole().readLine());
-        menuManager.getConsole().readLine();
         if (gradeValue < 1 || gradeValue > 6) {
-            pauseAndReturn();
+            System.out.println("Podaj prawidłową wartość oceny");
             return;
         }
         System.out.println("Podaj komentarz oceny (może być pusty)");
@@ -116,7 +113,6 @@ public class OcenyScreen extends Screen {
         dziennik.pushGrade(newGrade);
         System.out.println("\nDodano ocenę: " + student.getFullName() +
                 " - " + gradeValue + " (" + comment + ")");
-        pauseAndReturn();
     }
 
     private Lekcja findLastTeacherLesson() {
@@ -126,6 +122,7 @@ public class OcenyScreen extends Screen {
                 .toList();
         
         if (teacherLessons.isEmpty()) {
+            System.out.println("Wybierano nieprawidłową opcje");
             return null;
         }
         
@@ -151,7 +148,6 @@ public class OcenyScreen extends Screen {
                     " - " + grade.getValue() + " (" + grade.getComment() + ")");
             }
         }
-        pauseAndReturn();
     }
 }
 

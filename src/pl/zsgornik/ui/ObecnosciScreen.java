@@ -10,8 +10,6 @@ import pl.zsgornik.model.Uczen;
 import pl.zsgornik.model.Uwaga;
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class ObecnosciScreen extends Screen {
     public ObecnosciScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -39,7 +37,7 @@ public class ObecnosciScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -49,7 +47,7 @@ public class ObecnosciScreen extends Screen {
 
         Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
-            pauseAndReturn();
+            System.out.println("Nieprawidłowa lekcja");
             return;
         }
 
@@ -63,8 +61,6 @@ public class ObecnosciScreen extends Screen {
                 System.out.println("  " + attendance);
             }
         }
-
-        pauseAndReturn();
     }
 
     private void registerAttendance () {
@@ -72,19 +68,19 @@ public class ObecnosciScreen extends Screen {
 
         Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
-            pauseAndReturn();
+            System.out.println("Nieprawidłowa lekcja");
             return;
         }
 
         Uczen student = selectionHelper.chooseStudent(lesson.getGroup());
         if (student == null) {
-            pauseAndReturn();
+            System.out.println("Nieprawidłowy uczeń");
             return;
         }
 
         StatusObecnosci status = StatusObecnosci.chooseType();
         if (status == null) {
-            pauseAndReturn();
+            System.out.println("Nieprawidłowy status");
             return;
         }
 
@@ -96,7 +92,6 @@ public class ObecnosciScreen extends Screen {
         }
 
         punishStudentForUnexcusedHours(dziennik, student);
-        pauseAndReturn();
     }
 
     public static void punishStudentForUnexcusedHours(DziennikLekcyjny dziennik, Uczen student) {

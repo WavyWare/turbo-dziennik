@@ -5,8 +5,6 @@ import pl.zsgornik.service.DziennikLekcyjny;
 
 import java.io.IOException;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class RejestracjaScreen extends Screen {
     public RejestracjaScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -69,7 +67,7 @@ public class RejestracjaScreen extends Screen {
         
         Nauczyciel teacher = new Nauczyciel(fullName, username, password);
         dziennik.pushTeacher(teacher);
-        pauseAndReturn("Rejestracja zakończona pomyślnie!");
+        System.out.println("Rejestracja zakończona pomyślnie!");
     }
 
     @Override

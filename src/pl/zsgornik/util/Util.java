@@ -24,16 +24,4 @@ public class Util {
         }
         return hexString.toString();
     }
-
-    public static void pauseAndReturn(String message) {
-        System.out.printf("\n%s\n", message);
-        pauseAndReturn();
-    }
-
-    public static void pauseAndReturn() {
-        System.out.println("Naciśnij Enter aby spróbować ponownie...");
-        Scanner sc = new Scanner(System.in);
-        sc.nextLine();
-        sc.close();
-    }
 }

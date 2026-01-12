@@ -8,7 +8,6 @@ import pl.zsgornik.model.Przedmiot;
 import pl.zsgornik.service.DziennikLekcyjny;
 
 import static pl.zsgornik.service.DziennikLekcyjny.getLoggedAs;
-import static pl.zsgornik.util.Util.pauseAndReturn;
 
 public class PrzedmiotyScreen extends Screen {
     public PrzedmiotyScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
@@ -53,47 +52,47 @@ public class PrzedmiotyScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
 
     private void addSubject() {
-                System.out.println("\nturbo dziennik - DODAJ PRZEDMIOT");
-                TypPrzedmiotu[] types = TypPrzedmiotu.values();
-                System.out.println("Wybierz typ przedmiotu:");
-                for (int i = 0; i < types.length; i++) {
-                    System.out.println((i + 1) + ". " + types[i].getName());
-                }
+        System.out.println("\nturbo dziennik - DODAJ PRZEDMIOT");
+        TypPrzedmiotu[] types = TypPrzedmiotu.values();
+        System.out.println("Wybierz typ przedmiotu:");
+        for (int i = 0; i < types.length; i++) {
+            System.out.println((i + 1) + ". " + types[i].getName());
+        }
 
-                int selectedTypeIdx = -1;
-                while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
-                    System.out.print("Podaj numer typu przedmiotu: ");
-                    try {
-                        String line = menuManager.getConsole().readLine().trim();
-                        selectedTypeIdx = Integer.parseInt(line) - 1;
-                    } catch (NumberFormatException e) {
-                        selectedTypeIdx = -1;
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
-                        System.out.println("Nieprawidłowy numer typu przedmiotu.");
-                    }
-                }
+        int selectedTypeIdx = -1;
+        while (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+            System.out.print("Podaj numer typu przedmiotu: ");
+            try {
+                String line = menuManager.getConsole().readLine().trim();
+                selectedTypeIdx = Integer.parseInt(line) - 1;
+            } catch (NumberFormatException e) {
+                selectedTypeIdx = -1;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            if (selectedTypeIdx < 0 || selectedTypeIdx >= types.length) {
+                System.out.println("Nieprawidłowy numer typu przedmiotu.");
+            }
+        }
 
-                TypPrzedmiotu wybranyTyp = types[selectedTypeIdx];
+        TypPrzedmiotu wybranyTyp = types[selectedTypeIdx];
 
-                Przedmiot nowyPrzedmiot = new Przedmiot(wybranyTyp);
-                dziennik.pushSubject(nowyPrzedmiot);
+        Przedmiot nowyPrzedmiot = new Przedmiot(wybranyTyp);
+        dziennik.pushSubject(nowyPrzedmiot);
 
-                pauseAndReturn("\nDodano przedmiot: " + wybranyTyp.getName());
+        System.out.println("\nDodano przedmiot: " + wybranyTyp.getName());
     }
 
     private void removeSubject() {
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            pauseAndReturn("\nBrak przedmiotów do usunięcia.");
+            System.out.println("\nBrak przedmiotów do usunięcia.");
             return;
         }
 
@@ -115,13 +114,13 @@ public class PrzedmiotyScreen extends Screen {
             System.out.println("Nieprawidłowy format liczby.");
         }
 
-        pauseAndReturn();
+        System.out.println();
     }
 
     private void editSubject() {
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            pauseAndReturn("\nBrak przedmiotów do modyfikacji.");
+            System.out.println("\nBrak przedmiotów do modyfikacji.");
             return;
         }
 
@@ -135,12 +134,12 @@ public class PrzedmiotyScreen extends Screen {
         try {
             idx = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
         } catch (NumberFormatException | IOException e) {
-            pauseAndReturn("Nieprawidłowy format liczby.");
+            System.out.println("Nieprawidłowy format liczby.");
             return;
         }
 
         if (idx < 0 || idx >= subjects.size()) {
-            pauseAndReturn("Nieprawidłowy numer przedmiotu.");
+            System.out.println("Nieprawidłowy numer przedmiotu.");
             return;
         }
 
@@ -168,7 +167,7 @@ public class PrzedmiotyScreen extends Screen {
         }
 
         subject.setType(types[selectedTypeIdx]);
-        pauseAndReturn("\nZmieniono typ przedmiotu na: " + subject.getType().getName());
+        System.out.println("\nZmieniono typ przedmiotu na: " + subject.getType().getName());
     }
 
     private void displaySubjects() {
@@ -193,7 +192,7 @@ public class PrzedmiotyScreen extends Screen {
                 System.out.println();
             }
         }
-        pauseAndReturn();
+        System.out.println();
     }
 
     private void addTeacherToSubject() {
@@ -203,16 +202,17 @@ public class PrzedmiotyScreen extends Screen {
         
         Przedmiot subject = selectionHelper.selectSubject();
         if (subject == null) {
+            System.out.println("Wybierano nieprawidłowy przedmiot");
             return;
         }
         
         if (subject.getTeachers().contains(loggedTeacher)) {
-            pauseAndReturn("Jesteś już przypisany do tego przedmiotu.");
+            System.out.println("Jesteś już przypisany do tego przedmiotu.");
             return;
         }
         
         subject.addTeacher(loggedTeacher);
-        pauseAndReturn("\nDodano Cię do przedmiotu: " + subject.getType().getName());
+        System.out.println("\nDodano Cię do przedmiotu: " + subject.getType().getName());
     }
 
     private void removeTeacherFromSubject() {
@@ -224,7 +224,7 @@ public class PrzedmiotyScreen extends Screen {
             .toList();
             
         if (teacherSubjects.isEmpty()) {
-            pauseAndReturn("\nNie jesteś przypisany do żadnego przedmiotu.");
+            System.out.println("\nNie jesteś przypisany do żadnego przedmiotu.");
             return;
         }
 
@@ -241,21 +241,22 @@ public class PrzedmiotyScreen extends Screen {
         try {
             int idx = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
             if (idx == -1) {
+                System.out.println("Nieprawidłowa wartość");
                 return;
             }
             if (idx < 0 || idx >= teacherSubjects.size()) {
-                pauseAndReturn("Nieprawidłowy numer przedmiotu.");
+                System.out.println("Nieprawidłowy numer przedmiotu.");
                 return;
             }
             
             Przedmiot subject = teacherSubjects.get(idx);
             if (subject.removeTeacher(loggedTeacher)) {
-                pauseAndReturn("\nUsunięto Cię z przedmiotu: " + subject.getType().getName());
+                System.out.println("\nUsunięto Cię z przedmiotu: " + subject.getType().getName());
             } else {
-                pauseAndReturn("\nNie udało się usunąć z przedmiotu.");
+                System.out.println("\nNie udało się usunąć z przedmiotu.");
             }
         } catch (NumberFormatException e) {
-            pauseAndReturn("Nieprawidłowy format liczby.");
+            System.out.println("Nieprawidłowy format liczby.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

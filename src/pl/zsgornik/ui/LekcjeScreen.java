@@ -12,8 +12,6 @@ import pl.zsgornik.model.Przedmiot;
 import pl.zsgornik.model.Uczen;
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class LekcjeScreen extends Screen {
     public LekcjeScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -45,10 +43,12 @@ public class LekcjeScreen extends Screen {
             case "4":
                 Lekcja attendanceLesson = selectionHelper.selectLesson();
                 if (attendanceLesson == null) {
+                    System.out.println("Nieprawidłowa lekcja");
                     break;
                 }
                 Obecnosc attendance = selectionHelper.selectAttendance(attendanceLesson);
                 if (attendance == null) {
+                    System.out.println("Nieprawidłowa obecność");
                     break;
                 }
                 StatusObecnosci newStatus = StatusObecnosci.chooseType();
@@ -56,13 +56,12 @@ public class LekcjeScreen extends Screen {
                     attendance.setStatus(newStatus);
                     ObecnosciScreen.punishStudentForUnexcusedHours(dziennik, attendance.getStudent());
                 }
-                pauseAndReturn();
                 break;
             case "0":
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -70,7 +69,7 @@ public class LekcjeScreen extends Screen {
     private void registerClassAttendance() {
         Lekcja lesson = selectionHelper.selectLesson();
         if (lesson == null) {
-            pauseAndReturn("Nieprawidłowa opcja");
+            System.out.println("Nieprawidłowa lekcja");
             return;
         }
         List<Uczen> students = lesson.getGroup().getStudents();
@@ -79,13 +78,12 @@ public class LekcjeScreen extends Screen {
             System.out.printf("\nTyp obecności dla %s: ", student);
             StatusObecnosci type = StatusObecnosci.chooseType();
             if (type == null) {
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowy typ");
                 break;
             }
             lesson.registerAttendance(student, type);
         }
         System.out.println("\nDodano obecności!");
-        pauseAndReturn();
     }
 
     private void displayLessons() {
@@ -98,7 +96,6 @@ public class LekcjeScreen extends Screen {
                 System.out.println((i + 1) + ". " + lessons.get(i));
             }
         }
-        pauseAndReturn();
     }
 
     private void addLesson() {
@@ -106,7 +103,7 @@ public class LekcjeScreen extends Screen {
         
         List<Przedmiot> subjects = dziennik.getSubjects();
         if (subjects.isEmpty()) {
-            pauseAndReturn("Brak przedmiotów");
+            System.out.println("Brak przedmiotów");
             return;
         }
 
@@ -119,7 +116,7 @@ public class LekcjeScreen extends Screen {
         try {
             int subjectIndex = Integer.parseInt(menuManager.getConsole().readLine().trim()) - 1;
             if (subjectIndex < 0 || subjectIndex >= subjects.size()) {
-                pauseAndReturn("Nieprawidłowy numer przedmioty");
+                System.out.println("Nieprawidłowy numer przedmioty");
                 return;
             }
 
@@ -128,15 +125,15 @@ public class LekcjeScreen extends Screen {
 
             Klasa klasa = selectionHelper.selectClass();
             if (klasa == null) {
+                System.out.println("Nieprawidłowa klasa");
                 return;
             }
             Lekcja lesson = new Lekcja(subject, teacher, klasa, LocalDate.now());
             dziennik.addLesson(lesson);
             
             System.out.println("\nDodano lekcję: " + lesson);
-            pauseAndReturn();
         } catch (NumberFormatException e) {
-            pauseAndReturn("Nieprawidłowy format liczby");
+            System.out.println("Nieprawidłowy format liczby");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

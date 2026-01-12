@@ -7,8 +7,6 @@ import pl.zsgornik.model.Uczen;
 import pl.zsgornik.model.Uwaga;
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class UczenScreen extends Screen {
     public UczenScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -64,7 +62,7 @@ public class UczenScreen extends Screen {
                 menuManager.popScreen();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
@@ -76,16 +74,17 @@ public class UczenScreen extends Screen {
         System.out.println("\nPodaj nowy opis uwagi:");
         String newDescription = menuManager.getConsole().readLine();
         if (newDescription.isEmpty()){
-            pauseAndReturn("Opis nie może być pusty");
+            System.out.println("Opis nie może być pusty");
             return;
         }
         note.setDescription(newDescription);
-        pauseAndReturn("Zastosowano zmiany");
+        System.out.println("Zastosowano zmiany");
     }
 
     private Uwaga chooseNote() {
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
+            System.out.println("Wybrano nieprawidłowego ucznia");
             return null;
         }
         return selectionHelper.selectNote(student);
@@ -94,6 +93,7 @@ public class UczenScreen extends Screen {
     private void reportBehavior() {
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
+            System.out.println("Wybrano nieprawidłowego ucznia");
             return;
         }
         int negatives = 0;
@@ -109,25 +109,24 @@ public class UczenScreen extends Screen {
         System.out.printf("Pochwał: %d\n", positives);
         System.out.printf("Uwag: %d\n", negatives);
         System.out.println("\nRóżnica: " + (positives-negatives));
-        pauseAndReturn();
     }
 
     private void addNote() throws IOException {
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
+            System.out.println("Wybrano nieprawidłowego ucznia");
             return;
         }
         System.out.println("\nPodaj treść uwagi:");
         String description = menuManager.getConsole().readLine();
         if (description.isEmpty()) {
-            pauseAndReturn("Opis nie może być pusty");
+            System.out.println("Opis nie może być pusty");
             return;
         }
         System.out.println("Czy uwaga jest negatywna (domyślnie: tak): tak/nie");
         boolean isPositive = menuManager.getConsole().readLine().equalsIgnoreCase("nie");
         Uwaga newNote = new Uwaga(isPositive, description);
         student.pushNote(newNote);
-        pauseAndReturn();
     }
 
     private void displayNotes() {
@@ -140,7 +139,6 @@ public class UczenScreen extends Screen {
         for (int i = 0; i < behaviouralNotes.size(); i++) {
             System.out.println((i + 1)+ ". " + behaviouralNotes.get(i));
         }
-        pauseAndReturn();
     }
 
     private void listStudents() {
@@ -161,44 +159,46 @@ public class UczenScreen extends Screen {
                 }
             }
         }
-        pauseAndReturn();
     }
 
     private void addStudent() throws IOException {
         System.out.println("\nturbo dziennik - DODAWANIE UCZNIA");
         Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
+            System.out.println("Wybierano nieprawidłową klasę");
             return;
         }
 
         System.out.print("Podaj imię i nazwisko ucznia: ");
         String fullName = menuManager.getConsole().readLine().trim();
         if (fullName.isEmpty()) {
-            pauseAndReturn("Imię i nazwisko nie może być puste.");
+            System.out.println("Imię i nazwisko nie może być puste.");
             return;
         }
 
         Uczen newStudent = new Uczen(fullName);
         chosenClass.addStudent(newStudent);
-        pauseAndReturn("\nDodano ucznia " + fullName + " do klasy " + chosenClass.getClassName());
+        System.out.println("\nDodano ucznia " + fullName + " do klasy " + chosenClass.getClassName());
     }
 
     private void removeStudent() {
         System.out.println("\nturbo dziennik - USUWANIE UCZNIA Z KLASY");
         Klasa chosenClass = selectionHelper.selectClass();
         if (chosenClass == null) {
+            System.out.println("Wybierano nieprawidłową klasę");
             return;
         }
 
         Uczen student = selectionHelper.chooseStudent(chosenClass);
         if (student == null) {
+            System.out.println("Wybierano nieprawidłowego ucznia");
             return;
         }
 
         if (chosenClass.removeStudent(student)) {
-            pauseAndReturn("\nUsunięto ucznia " + student.getFullName() + " z klasy " + chosenClass.getClassName());
+            System.out.println("\nUsunięto ucznia " + student.getFullName() + " z klasy " + chosenClass.getClassName());
         } else {
-            pauseAndReturn("\nNie udało się usunąć ucznia z klasy.");
+            System.out.println("\nNie udało się usunąć ucznia z klasy.");
         }
     }
 
@@ -206,6 +206,7 @@ public class UczenScreen extends Screen {
         System.out.println("\nturbo dziennik - RAPORT FREKWENCJI UCZNIA");
         Uczen student = selectionHelper.chooseStudentWithClass();
         if (student == null) {
+            System.out.println("Wybierano nieprawidłowego ucznia");
             return;
         }
 
@@ -215,7 +216,6 @@ public class UczenScreen extends Screen {
         } else {
             System.out.printf("Frekwencja ucznia %s: %.2f%%%n", student.getFullName(), percent);
         }
-        pauseAndReturn();
     }
 
     private void reportGrades() {
@@ -224,7 +224,6 @@ public class UczenScreen extends Screen {
             return;
         }
         dziennik.printStudentReport(student);
-        pauseAndReturn();
     }
 }
 

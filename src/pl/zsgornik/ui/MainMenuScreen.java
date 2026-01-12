@@ -2,8 +2,6 @@ package pl.zsgornik.ui;
 
 import pl.zsgornik.service.DziennikLekcyjny;
 
-import static pl.zsgornik.util.Util.pauseAndReturn;
-
 public class MainMenuScreen extends Screen {
     public MainMenuScreen(MenuManager menuManager, DziennikLekcyjny dziennik) {
         super(menuManager, dziennik);
@@ -47,7 +45,7 @@ public class MainMenuScreen extends Screen {
                 break;
             case "7":
                 dziennik.logout();
-                pauseAndReturn("Wylogowano pomyślnie");
+                System.out.println("Wylogowano pomyślnie");
                 menuManager.replaceScreen(new StartScreen(menuManager, dziennik));
                 break;
             case "0":
@@ -55,7 +53,7 @@ public class MainMenuScreen extends Screen {
                 menuManager.stop();
                 break;
             default:
-                pauseAndReturn("Nieprawidłowa opcja");
+                System.out.println("Nieprawidłowa opcja");
                 break;
         }
     }
